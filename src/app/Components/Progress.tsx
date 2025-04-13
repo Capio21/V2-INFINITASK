@@ -3,7 +3,7 @@ import axios from "axios";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-const API_URL = "http://127.0.0.1:8000/api/progress"; // Change URL if needed
+const API_URL = "https://infinitech-api5.site/api/progress"; // Change URL if needed
 
 interface Task {
   id: number;

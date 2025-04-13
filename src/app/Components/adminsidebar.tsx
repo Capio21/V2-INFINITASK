@@ -28,7 +28,7 @@ const SidebarNavigation = () => {
         return;
       }
       await axios.post(
-        "http://127.0.0.1:8000/api/logout",
+        "https://infinitech-api5.site/api/logout",
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

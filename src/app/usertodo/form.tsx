@@ -51,7 +51,7 @@ const TaskForm: React.FC<{
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/users");
+        const response = await axios.get("https://infinitech-api5.site/api/users");
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -85,12 +85,12 @@ const TaskForm: React.FC<{
       };
 
       if (editingTask) {
-        await axios.put(`http://127.0.0.1:8000/api/tasks/${editingTask.id}`, taskData);
+        await axios.put(`https://infinitech-api5.site/api/tasks/${editingTask.id}`, taskData);
         setTasks(tasks.map((task) => (task.id === editingTask.id ? { ...task, ...taskData } : task)));
         setEditingTask(null);
         toast.success("Task updated successfully!");
       } else {
-        const response = await axios.post("http://127.0.0.1:8000/api/tasks", taskData);
+        const response = await axios.post("https://infinitech-api5.site/api/tasks", taskData);
         setTasks([...tasks, response.data]);
         toast.success("Task created successfully!");
       }
