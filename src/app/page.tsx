@@ -235,70 +235,65 @@ const HeroSection = () => {
     </p>
 
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 justify-items-center">
-    {[
-  {
-    icon: "📍",
-    title: "Location",
-    content: "Unit 311, Campus Rueda Bldg., Urban Avenue, Makati City, Metro Manila 1230"
-  },
-  {
-    icon: "📞",
-    title: "Phone",
-    content: "+63 966 751 5747"
-  },
-  {
-    
-      icon: "📧",
-      title: "Email",
-      content: "infinitechcorp.ph@gmail.com",
-      isLink: true,
-      size: "text-sm", // You can increase this too if needed
-      iconSize: "text-6xl" // 👈 Add this custom property for large icon
-    
-    
-  },
-  {
-    icon: "⏰",
-    title: "Business Hours",
-    content: "Mon - Fri: 8 AM - 5 PM"
-  },
-  {
-    icon: "💬",
-    title: "Chat with us",
-    content: "Click below to start a chat",
-    isButton: true
-  }
-].map((item, index) => (
-  <div
-    key={index}
-    className="bg-white/5 backdrop-blur-md border border-blue-700 p-8 rounded-2xl shadow-lg text-center w-full max-w-[260px] transform transition hover:scale-105 hover:shadow-xl"
-  >
-    <div className="text-5xl mb-5">{item.icon}</div>
-    <h3 className="text-2xl font-semibold text-blue-300 mb-3">{item.title}</h3>
+      {[
+        {
+          icon: "📍",
+          title: "Location",
+          content: "Unit 311, Campus Rueda Bldg., Urban Avenue, Makati City, Metro Manila 1230"
+        },
+        {
+          icon: "📞",
+          title: "Phone",
+          content: "+63 966 751 5747"
+        },
+        {
+          icon: "📧",
+          title: "Email",
+          content: "infinitechcorp.ph@gmail.com",
+          isLink: true
+        },
+        {
+          icon: "⏰",
+          title: "Business Hours",
+          content: "Mon - Fri: 8 AM - 5 PM"
+        },
+        {
+          icon: "💬",
+          title: "Chat with us",
+          content: "Click below to start a chat",
+          isButton: true
+        }
+      ].map((item, index) => (
+        <div
+          key={index}
+          className="bg-white/5 backdrop-blur-md border border-blue-700 p-6 md:p-8 rounded-2xl shadow-lg text-center w-full max-w-[260px] transform transition hover:scale-105 hover:shadow-xl"
+        >
+          <div className="text-4xl md:text-5xl mb-5">{item.icon}</div>
+          <h3 className="text-xl md:text-2xl font-semibold text-blue-300 mb-3">{item.title}</h3>
 
-    {item.isLink ? (
-      <a
-        href={`mailto:${item.content}`}
-        className={`text-blue-400 underline hover:text-blue-300 transition ${item.size || "text-base"}`}
-      >
-        {item.content}
-      </a>
-    ) : item.isButton ? (
-      <button
-        onClick={openChat}
-        className="mt-3 px-6 py-3 text-sm font-semibold rounded-full bg-blue-500 text-white hover:bg-blue-600 transition"
-      >
-        Click it
-      </button>
-    ) : (
-      <p className="text-gray-300 text-base">{item.content}</p>
-    )}
-  </div>
-))}
-
+          {item.isLink ? (
+           <a
+           href={`mailto:${item.content}`}
+           className="text-blue-400 underline hover:text-blue-300 text-sm break-words overflow-hidden text-ellipsis w-full block max-w-[200px] mx-auto"
+         >
+           {item.content}
+         </a>
+          ) : item.isButton ? (
+            <button
+              onClick={openChat}
+              className="mt-3 px-6 py-2 text-sm font-semibold rounded-full bg-blue-500 text-white hover:bg-blue-600 transition"
+            >
+              Click it
+            </button>
+          ) : (
+            <p className="text-gray-300 text-sm break-words">{item.content}</p>
+          )}
+        </div>
+      ))}
     </div>
   </div>
 </section>
+
 
 
       {/* Footer Section */}
