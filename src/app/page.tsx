@@ -75,7 +75,7 @@ const HeroSection = () => {
           {/* INFINITECH Text Branding (slightly lower) */}
           <div className="absolute bottom-10 sm:bottom-8 z-20">
             <div className="flex flex-wrap gap-1 sm:gap-2 text-xl sm:text-3xl font-extrabold tracking-wider text-[#48B2FF]">
-              {['I', 'N', 'F', 'I', 'N', 'I', 'T', 'E', 'C', 'H'].map((letter, i) => (
+              {['I', 'N', 'F', 'I', 'N', 'I', 'T', 'A', 'S', 'K'].map((letter, i) => (
                 <span
                   key={i}
                   style={{
