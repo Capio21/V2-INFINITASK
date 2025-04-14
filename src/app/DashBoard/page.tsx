@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Adminbar from "../Components/adminsidebar"; // Assuming this is your sidebar component
+import Adminbar from "../Components/adminsidebar"; 
 import {
   PieChart,
   Pie,
@@ -18,28 +18,18 @@ import {
   Legend,
 } from "recharts";
 import { ToastContainer } from "react-toastify";
-import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa'; // Importing icons
-import authUser  from "../utils/authUser";
+import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa'; 
+import authUser from "../utils/authUser"; // only if used
 
 const API_BASE_URL = "https://infinitech-api5.site/api";
 
-
-
-
 const TaskList = ({ tasks = [] }) => {
-  const itemsPerPage = 5; // Number of items per page
+  const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
-
-  // Calculate total pages
   const totalPages = Math.ceil(tasks.length / itemsPerPage);
-
-  // Get current tasks based on the current page
   const currentTasks = tasks.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-  // Function to handle page change
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
+  const handlePageChange = (page) => setCurrentPage(page);
 
   return (
     <div className="bg-white p-4 rounded-xl shadow-lg w-full">
@@ -48,39 +38,36 @@ const TaskList = ({ tasks = [] }) => {
         <table className="min-w-full border border-blue-200 divide-y divide-blue-200">
           <thead>
             <tr>
-              <th className="px-8 py-4 text-left text-lg font-bold text-gray-800 uppercase tracking-wider border-b border-blue-200">Title</th>
-              <th className="px-8 py-4 text-left text-lg font-bold text-gray-800 uppercase tracking-wider border-b border-blue-200">User </th>
-              <th className="px-8 py-4 text-left text-lg font-bold text-gray-800 uppercase tracking-wider border-b border-blue-200">Status</th>
-              <th className="px-8 py-4 text-left text-lg font-bold text-gray-800 uppercase tracking-wider border-b border-blue-200">Due Date</th>
+              {["Title", "User", "Status", "Due Date"].map((header, i) => (
+                <th key={i} className="px-8 py-4 text-left text-lg font-bold text-gray-800 uppercase tracking-wider border-b border-blue-200">
+                  {header}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody className="bg-blue-50 divide-y divide-blue-200">
             {currentTasks.map((task) => (
               <tr key={task.id}>
-                <td className="px-8 py-4 whitespace-nowrap text-lg text-gray-800 border border-blue-200 flex items-center">
+                <td className="px-8 py-4 text-lg text-gray-800 border border-blue-200 flex items-center">
                   {task.status === 'complete' && <FaCheckCircle className="text-green-400 mr-2" />}
                   {task.status === 'overdue' && <FaExclamationCircle className="text-red-400 mr-2" />}
                   {task.title}
                 </td>
-                <td className="px-8 py-4 whitespace-nowrap text-lg text-gray-800 border border-blue-200">{task.user.username}</td>
-                <td className="px-8 py-4 whitespace-nowrap text-lg text-gray-800 border border-blue-200">{task.status}</td>
-                <td className="px-8 py-4 whitespace-nowrap text-lg text-gray-800 border border-blue-200">
-                  {(() => {
-                    const date = new Date(task.deadline);
-                    const options = { day: 'numeric', month: 'long', year: 'numeric' };
-                    const formattedDate = date.toLocaleDateString('en-US', options);
-                    const parts = formattedDate.replace(',', '').split(' ');
-                    const [month, day, year] = parts;
-                    return `${day} - ${month} - ${year}`;
-                  })()}
+                <td className="px-8 py-4 text-lg text-gray-800 border border-blue-200">{task.user?.username}</td>
+                <td className="px-8 py-4 text-lg text-gray-800 border border-blue-200">{task.status}</td>
+                <td className="px-8 py-4 text-lg text-gray-800 border border-blue-200">
+                  {new Date(task.deadline).toLocaleDateString('en-US', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  }).replace(',', '').split(' ').join(' - ')}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-  
-      {/* Pagination Controls */}
+
       <div className="flex justify-between items-center mt-4">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
@@ -89,9 +76,7 @@ const TaskList = ({ tasks = [] }) => {
         >
           Previous
         </button>
-        <span className="text-gray-800">
-          Page {currentPage} of {totalPages}
-        </span>
+        <span className="text-gray-800">Page {currentPage} of {totalPages}</span>
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
@@ -117,86 +102,54 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const tasksRes = await axios.get(`${API_BASE_URL}/tasks`);
-        const tasks = tasksRes.data;
-
+        const { data: tasks } = await axios.get(`${API_BASE_URL}/tasks`);
         setTaskCount(tasks.length);
-        setPendingCount(tasks.filter((task) => task.status === "pending").length);
-        setCompletedCount(tasks.filter((task) => task.status === "complete").length);
+        setPendingCount(tasks.filter(t => t.status === "pending").length);
+        setCompletedCount(tasks.filter(t => t.status === "complete").length);
+        setOverdueCount(tasks.filter(t => new Date(t.deadline) < new Date() && t.status !== "complete").length);
+        setTaskData(tasks);
 
-        // Calculate overdue tasks
-        const now = new Date();
-        const overdueTasks = tasks.filter((task) => new Date(task.deadline) < now && task.status !== "complete");
-        setOverdueCount(overdueTasks.length);
-
-        const usersRes = await axios.get(`${API_BASE_URL}/users`);
-        const users = usersRes.data;
-
+        const { data: users } = await axios.get(`${API_BASE_URL}/users`);
         setUserCount(users.length);
-
         const groupedUsers = users.reduce((acc, user) => {
           const date = new Date(user.created_at).toLocaleDateString();
           acc[date] = (acc[date] || 0) + 1;
           return acc;
         }, {});
-
-        const formattedUserData = Object.keys(groupedUsers).map((date) => ({
-          date,
-          users: groupedUsers[date],
-        }));
-
+        const formattedUserData = Object.entries(groupedUsers).map(([date, users]) => ({ date, users }));
         setUserData(formattedUserData);
-        setTaskData(tasks);
-
-      } catch (error) {
-        console.error("Error fetching data:", error);
+      } catch (err) {
+        console.error("Fetch error:", err);
       }
     };
 
     fetchData();
-
     const clockInterval = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(clockInterval);
   }, []);
 
-  const data = [
+  const chartData = [
     { name: 'Pending', value: pendingCount },
     { name: 'Completed', value: completedCount },
     { name: 'Overdue', value: overdueCount },
   ];
-
   const COLORS = ['#FFBB28', '#00C49F', '#FF4C4C'];
 
   return (
     <div className="flex flex-col max-h-full bg-blue-50 text-gray-800">
       <Adminbar />
-  
       <div className="flex flex-1">
-        {/* Sidebar / Adminbar */}
-        <div className="sticky top-0 h-screen w-64 bg-blue-600 shadow-lg hidden md:block"></div>
-  
-        {/* Main Content */}
+        <div className="sticky top-0 h-screen w-64 bg-blue-600 shadow-lg hidden md:block" />
         <div className="flex-1 flex flex-col min-h-screen p-4 md:p-9 w-full overflow-auto">
           <ToastContainer />
-          <br />
-          <br />
           <h1 className="text-5xl font-bold mb-4 text-blue-900 text-center">
-
-            Dashboard<span className="text-lg text-blue-900"> | Admin</span>
+            Dashboard <span className="text-lg">| Admin</span>
           </h1>
-  
-          {/* Current Time */}
           <div className="text-center mb-6">
             <p className="text-2xl font-bold text-blue-900">
-              {currentTime.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })} - {currentTime.toLocaleTimeString()}
+              {currentTime.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} - {currentTime.toLocaleTimeString()}
             </p>
           </div>
-  
-          {/* Dashboard Cards */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-5">
             {[
               { label: "Total Tasks", count: taskCount, color: "text-gray-300" },
@@ -211,15 +164,14 @@ const Dashboard = () => {
               </div>
             ))}
           </div>
-  
-          {/* Charts */}
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="bg-white p-4 rounded-xl shadow-lg flex flex-col items-center border border-blue-200">
+            <div className="bg-white p-4 rounded-xl shadow-lg border border-blue-200">
               <h2 className="text-lg font-semibold text-center mb-2 text-blue-600">Task Progress</h2>
               <ResponsiveContainer width="100%" height={350}>
                 <PieChart>
                   <Pie
-                    data={data}
+                    data={chartData}
                     cx="50%"
                     cy="50%"
                     innerRadius={80}
@@ -228,7 +180,7 @@ const Dashboard = () => {
                     dataKey="value"
                     label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                   >
-                    {data.map((entry, index) => (
+                    {chartData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
@@ -236,8 +188,8 @@ const Dashboard = () => {
                 </PieChart>
               </ResponsiveContainer>
             </div>
-  
-            <div className="bg-white p-4 rounded-xl shadow-lg w-full border border-blue-200">
+
+            <div className="bg-white p-4 rounded-xl shadow-lg border border-blue-200">
               <h2 className="text-lg font-semibold text-center mb-2 text-blue-600">Users per Date</h2>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={userData}>
@@ -251,14 +203,15 @@ const Dashboard = () => {
               </ResponsiveContainer>
             </div>
           </div>
-          <br />
-  
-          {/* Task List Component - Now below the charts */}
-          <TaskList tasks={taskData} />
+
+          {/* Task Table */}
+          <div className="mt-8">
+            <TaskList tasks={taskData} />
+          </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default authUser (Dashboard);
+export default Dashboard;
