@@ -24,10 +24,7 @@ import authUser  from "../utils/authUser";
 const API_BASE_URL = "https://infinitech-api5.site/api";
 
 
-const api = axios.create({
-  baseURL: API_BASE_URL,
-  withCredentials: true, // ⬅️ Required for Sanctum/cookie-based auth
-});
+
 
 const TaskList = ({ tasks = [] }) => {
   const itemsPerPage = 5; // Number of items per page
