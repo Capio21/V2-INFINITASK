@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify"; 
-import 'react-toastify/dist/ReactToastify.css'; 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface ArchivedTask {
   id: number;
@@ -18,8 +18,8 @@ export default function Archive() {
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedTask, setSelectedTask] = useState<ArchivedTask | null>(null);
-  const tasksPerPage = 2; 
-  const [showTable, setShowTable] = useState<boolean>(false); // State to control the sliding effect
+  const tasksPerPage = 2;
+  const [showTable, setShowTable] = useState<boolean>(false);
 
   useEffect(() => {
     fetchArchivedTasks();
@@ -31,11 +31,11 @@ export default function Archive() {
     try {
       const response = await axios.get("https://infinitech-api5.site/api/archived-tasks");
       setArchivedTasks(response.data);
-      setShowTable(true); // Show the table after fetching tasks
+      setShowTable(true);
     } catch (error) {
       setError("Failed to fetch archived tasks.");
       console.error("Error fetching archived tasks:", error);
-      toast.error("Failed to fetch archived tasks.", { autoClose: 3000 }); // Show error toast with autoClose
+      toast.error("Failed to fetch archived tasks.", { autoClose: 3000 });
     } finally {
       setLoading(false);
     }
@@ -46,21 +46,26 @@ export default function Archive() {
       const response = await axios.put(`https://infinitech-api5.site/api/tasks/restore/${taskId}`);
       if (response.status === 200 && response.data.task.archived === 0) {
         setArchivedTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
-        toast.success("Task restored successfully!", { autoClose: 3000 }); // Show success toast with autoClose
+        toast.success("Task restored successfully!", { autoClose: 3000 });
       }
     } catch (error) {
       console.error("Error restoring task:", error);
-      toast.error("Failed to restore task.", { autoClose: 3000 }); // Show error toast with autoClose
+      toast.error("Failed to restore task.", { autoClose: 3000 });
     }
   };
 
   const totalPages = Math.ceil(archivedTasks.length / tasksPerPage);
-  const currentTasks = archivedTasks.slice((currentPage - 1) * tasksPerPage, currentPage * tasksPerPage);
+  const currentTasks = archivedTasks.slice(
+    (currentPage - 1) * tasksPerPage,
+    currentPage * tasksPerPage
+  );
 
   return (
     <section className="p-4 bg-white text-gray-800 rounded-lg shadow-md max-w-full mx-auto">
-      <h3 className="text-lg font-bold bg-gray-100 p-3 rounded border border-gray-300 mb-4 text-center">📦 Archived Tasks</h3>
-  
+      <h3 className="text-lg font-bold bg-gray-100 p-3 rounded border border-gray-300 mb-4 text-center">
+        📦 Archived Tasks
+      </h3>
+
       {loading ? (
         <p>Loading archived tasks...</p>
       ) : error ? (
@@ -73,13 +78,22 @@ export default function Archive() {
           <div className="block md:hidden">
             {currentTasks.map((task) => (
               <div key={task.id} className="border border-gray-300 rounded-lg p-4 mb-4 shadow-md">
-                <h4 className="font-bold text-lg">{task.title}</h4>
-                <p>{task.description.length > 30 ? `${task.description.slice(0, 30)}...` : task.description}</p>
+                <h4
+                  className="font-bold text-lg text-blue-700 cursor-pointer"
+                  onClick={() => setSelectedTask(task)}
+                >
+                  {task.title}
+                </h4>
+                <p>
+                  {task.description.length > 30
+                    ? `${task.description.slice(0, 30)}...`
+                    : task.description}
+                </p>
                 <p>Status: {task.status}</p>
                 <p>Deadline: {task.deadline}</p>
                 <button
                   onClick={() => restoreTask(task.id)}
-                  className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-500 text-xs"
+                  className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-500 text-xs mt-2"
                 >
                   🔄 Restore
                 </button>
@@ -94,7 +108,7 @@ export default function Archive() {
                 <tr>
                   <th className="p-3 border border-gray-300">ID</th>
                   <th className="p-3 border border-gray-300">Title</th>
-                  <th className="p-3 border border-gray-300">Description</th>
+                
                   <th className="p-3 border border-gray-300">Status</th>
                   <th className="p-3 border border-gray-300">Deadline</th>
                   <th className="p-3 border border-gray-300 text-center">Action</th>
@@ -105,26 +119,12 @@ export default function Archive() {
                   <tr key={task.id} className="hover:bg-gray-50">
                     <td className="p-3 border border-gray-300">{task.id}</td>
                     <td
-                      className="p-3 border border-gray-300 font-medium text-blue-700 cursor-pointer underline"
+                      className="p-3 border border-gray-300 font-medium text-blue-700 cursor-pointer"
                       onClick={() => setSelectedTask(task)}
                     >
                       {task.title}
                     </td>
-                    <td className="p-3 border border-gray-300">
-                      {task.description.length > 30 ? (
-                        <>
-                          {task.description.slice(0, 30)}...
-                          <button
-                            onClick={() => setSelectedTask(task)}
-                            className="ml-1 text-blue-500 hover:underline text-xs"
-                          >
-                            More
-                          </button>
-                        </>
-                      ) : (
-                        task.description
-                      )}
-                    </td>
+                   
                     <td className="p-3 border border-gray-300">{task.status}</td>
                     <td className="p-3 border border-gray-300">{task.deadline}</td>
                     <td className="p-3 border border-gray-300 text-center">
@@ -148,7 +148,9 @@ export default function Archive() {
               >
                 ◀️ Previous
               </button>
-              <span className="text-sm font-medium">Page {currentPage} of {totalPages}</span>
+              <span className="text-sm font-medium">
+                Page {currentPage} of {totalPages}
+              </span>
               <button
                 onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
@@ -160,7 +162,28 @@ export default function Archive() {
           </div>
         </div>
       )}
+
       <ToastContainer />
+
+      {selectedTask && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-2">
+    <div className="bg-white rounded-lg p-4 sm:p-6 shadow-lg w-full max-w-md relative max-h-[90vh] overflow-y-auto">
+      <button
+        onClick={() => setSelectedTask(null)}
+        className="absolute top-2 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold"
+      >
+        &times;
+      </button>
+      <h2 className="text-lg sm:text-xl font-bold mb-2 text-center">
+        {selectedTask.title}
+      </h2>
+      <p className="text-sm text-gray-700 whitespace-pre-wrap text-justify">
+        {selectedTask.description}
+      </p>
+    </div>
+  </div>
+)}
+
     </section>
   );
 }
