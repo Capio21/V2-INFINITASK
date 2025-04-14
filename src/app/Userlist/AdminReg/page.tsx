@@ -159,6 +159,9 @@ const Dashboard = () => {
   
         <div className="flex-1 p-6">
           <div className="flex justify-center items-center ">
+
+                <br />
+          <br />
             <h3 className="text-3xl font-bold text-blue-500">Admin Dashboard</h3>
           </div>
           {/* Button to open the modal */}
