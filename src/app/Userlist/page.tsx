@@ -250,6 +250,7 @@ const UsersTable = () => {
   };
 
   // Function to generate PDF report for a specific user
+   // Function to generate PDF report for a specific user
   const generateUserReport = (user) => {
     const { totalTasks, completedTasks, pendingTasks, overdueTasks, tasks } = calculateTaskStats(user.id);
     const doc = new jsPDF();
@@ -258,15 +259,20 @@ const UsersTable = () => {
     doc.setFont("courier", "bold");
     doc.setFontSize(14);
     
-    // Background
-    doc.setFillColor(220, 220, 220);
+    // Background (Light Gray)
+    doc.setFillColor(240, 240, 240); // Light gray background
     doc.rect(0, 0, doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight(), 'F');
 
-    // Header (Green Background)
-    doc.setFillColor(0, 128, 0); 
+    // Header (Blue Background)
+    doc.setFillColor(0, 102, 204); // Blue color
     doc.rect(0, 0, doc.internal.pageSize.getWidth(), 40, 'F');
-    doc.setTextColor(255, 255, 255);
+    doc.setTextColor(255, 255, 255); // White text
     
+    // Add Logo
+    const logoWidth = 40; // Adjust width as needed
+    const logoHeight = 40; // Adjust height as needed
+    doc.addImage('infini.png', 'PNG', 10, 5, logoWidth, logoHeight); // Add logo at the top left
+
     // Header Text
     const headerText = "InfiniteTask Report";
     const headerX = (doc.internal.pageSize.getWidth() - doc.getTextWidth(headerText)) / 2;
@@ -276,7 +282,7 @@ const UsersTable = () => {
     let y = 100;
 
     // User Details
-    doc.setTextColor(0, 0, 0);
+    doc.setTextColor(0, 0, 0); // Black text
     doc.text(`Report for: ${user.username}`, 20, y); y += 7;
     doc.text(`Email: ${user.email}`, 20, y); y += 7;
     doc.text(`Total Tasks: ${totalTasks}`, 20, y); y += 7;
@@ -307,8 +313,7 @@ const UsersTable = () => {
 
     // Save PDF
     doc.save(`${user.username}_report.pdf`);
-  };
-
+};
   // Pagination functions
   const nextPage = () => {
     if (currentPage < filteredUsers.length - 1) {
