@@ -254,66 +254,88 @@ const UsersTable = () => {
   const generateUserReport = (user) => {
     const { totalTasks, completedTasks, pendingTasks, overdueTasks, tasks } = calculateTaskStats(user.id);
     const doc = new jsPDF();
-
+  
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+  
     // Set font
     doc.setFont("courier", "bold");
     doc.setFontSize(14);
-    
+  
     // Background (Light Gray)
-    doc.setFillColor(240, 240, 240); // Light gray background
-    doc.rect(0, 0, doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight(), 'F');
-
+    doc.setFillColor(240, 240, 240);
+    doc.rect(0, 0, pageWidth, pageHeight, 'F');
+  
     // Header (Blue Background)
-    doc.setFillColor(0, 102, 204); // Blue color
-    doc.rect(0, 0, doc.internal.pageSize.getWidth(), 40, 'F');
-    doc.setTextColor(255, 255, 255); // White text
-    
-    // Add Logo
-    const logoWidth = 40; // Adjust width as needed
-    const logoHeight = 40; // Adjust height as needed
-    doc.addImage('infini.png', 'PNG', 10, 5, logoWidth, logoHeight); // Add logo at the top left
-
-    // Header Text
-    const headerText = "InfiniteTask Report";
-    const headerX = (doc.internal.pageSize.getWidth() - doc.getTextWidth(headerText)) / 2;
-    doc.text(headerText, headerX, 25);
-
-    // Move content down to prevent overlap
-    let y = 100;
-
-    // User Details
-    doc.setTextColor(0, 0, 0); // Black text
-    doc.text(`Report for: ${user.username}`, 20, y); y += 7;
-    doc.text(`Email: ${user.email}`, 20, y); y += 7;
-    doc.text(`Total Tasks: ${totalTasks}`, 20, y); y += 7;
-    doc.text(`Completed Tasks: ${completedTasks}`, 20, y); y += 7;
-    doc.text(`Pending Tasks: ${pendingTasks}`, 20, y); y += 7;
-    doc.text(`Overdue Tasks: ${overdueTasks}`, 20, y); y += 12;
-
+    const headerHeight = 60;
+    doc.setFillColor(0, 102, 204);
+    doc.rect(0, 0, pageWidth, headerHeight, 'F');
+  
+    // === Center Logo & Text ===
+    const logoSize = 30;
+    const centerX = pageWidth / 2;
+    const centerY = headerHeight / 2;
+  
+    // Draw white circular mask (circle)
+    doc.setFillColor(255, 255, 255);
+    doc.circle(centerX, centerY - 5, logoSize / 2 + 2, 'F'); // Slightly larger circle for mask look
+  
+    // Draw Logo
+    doc.addImage('infini.png', 'PNG',
+      centerX - logoSize / 2,
+      centerY - logoSize / 2 - 5,
+      logoSize, logoSize
+    );
+  
+    // Report Name below logo
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(15);
+    const headerText = "InfiniTask Report";
+    const textWidth = doc.getTextWidth(headerText);
+    doc.text(headerText, (pageWidth - textWidth) / 2, centerY + logoSize / 2 + 5);
+  
+    // Start content below header
+    let y = headerHeight + 30;
+    const contentX = 30;
+  
+    // Main User Details
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(14);
+    doc.text(`Report for: ${user.username}`, contentX, y); y += 10;
+    doc.text(`Email: ${user.email}`, contentX, y); y += 10;
+    doc.text(`Total Tasks: ${totalTasks}`, contentX, y); y += 10;
+    doc.text(`Completed Tasks: ${completedTasks}`, contentX, y); y += 10;
+    doc.text(`Pending Tasks: ${pendingTasks}`, contentX, y); y += 10;
+    doc.text(`Overdue Tasks: ${overdueTasks}`, contentX, y); y += 15;
+  
     // Task Details Section
     doc.setFontSize(14);
-    doc.text("Task Details:", 20, y); y += 10;
+    doc.text("Task Details:", contentX, y); y += 10;
     doc.setFontSize(12);
-
-    // Table headers
+  
     doc.setFont("courier", "bold");
-    doc.text("No.", 20, y);
-    doc.text("Task Details", 35, y);
+    doc.text("No.", contentX, y);
+    doc.text("Task Details", contentX + 20, y);
     y += 7;
     doc.setFont("courier", "normal");
-
-    // Task details - Wrapping long text
+  
+    // Loop tasks
     tasks.forEach((task, index) => {
-        let taskText = `ID: ${task.id}, Title: ${task.title || "N/A"}, Status: ${task.status}, Due: ${task.deadline}`;
-        let wrappedText = doc.splitTextToSize(taskText, 150);
-        doc.text((index + 1).toString(), 20, y);
-        doc.text(wrappedText, 35, y);
-        y += wrappedText.length * 6 + 5;
+      const taskText = `ID: ${task.id}, Title: ${task.title || "N/A"}, Status: ${task.status}, Due: ${task.deadline}`;
+      const wrappedText = doc.splitTextToSize(taskText, 150);
+      doc.text((index + 1).toString(), contentX, y);
+      doc.text(wrappedText, contentX + 20, y);
+      y += wrappedText.length * 6 + 5;
+  
+      // Add new page if overflow
+      if (y > pageHeight - 20) {
+        doc.addPage();
+        y = 20;
+      }
     });
-
-    // Save PDF
+  
     doc.save(`${user.username}_report.pdf`);
-};
+  };
   // Pagination functions
   const nextPage = () => {
     if (currentPage < filteredUsers.length - 1) {
