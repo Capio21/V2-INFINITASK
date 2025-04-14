@@ -67,7 +67,8 @@ const Dashboard = () => {
 
     fetchTasks();
   }, []);
-
+  const [showFull, setShowFull] = useState(false);
+  const toggleShow = () => setShowFull(!showFull);
   const handleLogout = () => {
     sessionStorage.removeItem("authToken");
     sessionStorage.removeItem("userRole");
@@ -240,7 +241,21 @@ const Dashboard = () => {
                 {currentTasks.map((task) => (
                   <tr key={task.id} className="border-t border-blue-300 hover:bg-blue-50">
                     <td className="px-2 py-3 font-bold text-center">{task.title}</td>
-                    <td className="px-2 py-3 font-bold text-center">{task.description}</td>
+                    <td className="px-2 py-3 font-bold text-center">
+      {task.description.length > 50 ? (
+        <>
+          {showFull ? task.description : `${task.description.slice(0, 10)}...`}
+          <button
+            className="text-blue-500 underline ml-1"
+            onClick={toggleShow}
+          >
+            {showFull ? 'Show less' : 'Show more'}
+          </button>
+        </>
+      ) : (
+        task.description
+      )}
+    </td>
                     <td className="px-2 py-3 font-bold text-center">{task.user?.username}</td>
                     <td className="px-2 py-3 font-bold text-center">{task.deadline}</td>
                     <td className="px-2 py-3 font-bold text-center">{task.time_started}</td>
