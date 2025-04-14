@@ -29,6 +29,7 @@ interface Task {
   archived?: boolean;
   visibility?: string;
   tags: string;
+  user: string;
 
 }
 
