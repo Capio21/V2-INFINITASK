@@ -637,128 +637,145 @@ const ActivityPage = () => {
           </div>
         </div>
 
-        {/* Right Sidebar for Adding/Editing Activity */}
-        <div className={`fixed inset-y-0 right-0 transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'} bg-blue-100 w-full max-w-md  p-6 sm:p-10 shadow-2xl rounded-l-lg z-50 border-4 border-blue-700`}>
-          <button
-            onClick={() => resetForm()}
-            className="absolute top-4 right-4 text-gray-900 text-2xl font-bold hover:text-gray-600"
-          >
-            ×
-          </button>
+  {/* Right Sidebar for Adding/Editing Activity */}
+<div className={`fixed inset-y-0 right-0 transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'} bg-blue-100 w-full max-w-md p-6 sm:p-10 shadow-2xl rounded-l-lg z-50 border-4 border-blue-700`}>
+  <button
+    onClick={() => resetForm()}
+    className="absolute top-4 right-4 text-gray-900 text-2xl font-bold hover:text-gray-600"
+  >
+    ×
+  </button>
 
-          <h2 className="text-xl sm:text-2xl font-bold mb-6 text-center text-blue-600">
-            {editId ? "EDIT" : "ADD"} TASK
-          </h2>
+  <h2 className="text-xl sm:text-2xl font-bold mb-6 text-center text-blue-600">
+    {editId ? "EDIT" : "ADD"} TASK
+  </h2>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-6">
-            <div className="flex flex-col">
-              <label className="text-gray-900 text-lg font-bold" htmlFor="title">Title</label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                placeholder="Add title here"
-                value={formData.title}
-                onChange={handleChange}
-                className="bg-transparent border-b-2 border-blue-300 text-gray-900 text-lg p-2 focus:outline-none focus:border-blue-500 font-bold"
-                required
-              />
-            </div>
+  <form onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-6 overflow-y-auto max-h-[80vh] pr-2">
+    
+    {/* Title */}
+    <div className="flex flex-col">
+      <label className="text-gray-900 text-lg font-bold" htmlFor="title">Title</label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        placeholder="Add title here"
+        value={formData.title}
+        onChange={handleChange}
+        className="bg-transparent border-b-2 border-blue-300 text-gray-900 text-lg p-2 focus:outline-none focus:border-blue-500 font-bold"
+        required
+      />
+    </div>
 
-            <div className="flex flex-col">
-            <label className="text-gray-900 text-lg font-bold">Descriptions</label>
+    {/* Descriptions Section */}
+    <div className="flex flex-col">
+      <label className="text-gray-900 text-lg font-bold">Descriptions</label>
 
-            {(formData.description || []).map((desc, index) => (
-              <div key={index} className="flex gap-2 items-center mb-2">
-                <input
-                  type="text"
-                  placeholder={`Task ${index + 1}`}
-                  value={desc} // Use the current description value
-                  onChange={(e) => handleDescriptionChange(index, e.target.value)} // Update the description on change
-                  className="flex-grow bg-transparent border-b-2 border-blue-300 text-gray-900 text-lg p-2 focus:outline-none focus:border-blue-500 font-bold"
-                />
-                {index > 0 && (
-                  <button type="button" onClick={() => removeDescriptionField(index)} className="text-red-500 font-bold">✕</button>
-                )}
-              </div>
-            ))}
-
-            <button
-              type="button"
-              onClick={addDescriptionField}
-              className="text-blue-600 text-sm font-semibold mt-2"
-            >
-              + Add Task
-            </button>
-          </div>
-
-            <div className="flex flex-col">
-              <label className="text-gray-900 text-lg font-bold" htmlFor="date_started">Date Started</label>
-              <input
-                type="date"
-                id="date_started"
-                name="date_started"
-                value={formData.date_started}
-                onChange={handleChange}
-                className="bg-transparent border-b-2 border-blue-300 text-gray-900 text-lg p-2 focus:outline-none focus:border-blue-500 font-bold"
-                required
-              />
-            </div>
-
-            <div className="flex flex-col">
-              <label className="text-gray-900 text-lg font-bold" htmlFor="due_date">Due Date</label>
-              <input
-                type="datetime-local"
-                id="due_date"
-                name="due_date"
-                value={formData.due_date}
-                onChange={handleChange}
-                className="bg-transparent border-b-2 border-blue-300 text-gray-900 text-lg p-2 focus:outline-none focus:border-blue-500 font-bold"
-                required
-              />
-            </div>
-
-            <div className="flex flex-col">
-              <label className="text-gray-900 text-lg font-bold" htmlFor="tags">Tags</label>
-              <input
-                type="text"
-                id="tags"
-                name="tags"
-                placeholder="Add tags here"
-                value={formData.tags}
-                onChange={handleChange}
-                className="bg-transparent border-b-2 border-blue-300 text-gray-900 text-lg p-2 focus:outline-none focus:border-blue-500 font-bold"
-              />
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <label className="text-gray-900 text-lg font-bold" htmlFor="collaborators">Collaborators</label>
-              <select
-                id="collaborators"
-                name="collaborators"
-                value={formData.collaborators?.[0] || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, collaborators: [parseInt(e.target.value)] })
-                }
-                className="bg-blue-100 text-gray-900 text-lg p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold"
+      <div className="grid grid-cols-1 gap-4 max-h-60 overflow-y-auto pr-1">
+        {(formData.description || []).map((desc, index) => (
+          <div key={index} className="flex items-center gap-2">
+            <input
+              type="text"
+              placeholder={`Task ${index + 1}`}
+              value={desc}
+              onChange={(e) => handleDescriptionChange(index, e.target.value)}
+              className="flex-grow bg-transparent border-b-2 border-blue-300 text-gray-900 text-lg p-2 focus:outline-none focus:border-blue-500 font-bold"
+            />
+            {index > 0 && (
+              <button
+                type="button"
+                onClick={() => removeDescriptionField(index)}
+                className="text-red-500 font-bold"
               >
-                <option value="" disabled>Select a collaborator</option>
-                {users.filter((user) => user.id !== Number(userId)).map(user => (
-                  <option key={user.id} value={user.id}>
-                    {user.username}
-                  </option>
-                ))}
-              </select>
-            </div>
+                ✕
+              </button>
+            )}
+          </div>
+        ))}
+      </div>
 
-            <button
-              type="submit"
-              className="bg-blue-600 text-white text-lg font-bold py-3 rounded-lg shadow-md hover:bg-blue-500 transition-all"
-            >
-              {editId ? "UPDATE" : "ADD"} TASK
-            </button>
-          </form>
-        </div>
+      <button
+        type="button"
+        onClick={addDescriptionField}
+        className="mt-3 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold py-2 px-4 rounded shadow-md transition-all w-fit"
+      >
+        + Add Task
+      </button>
+    </div>
+
+    {/* Date Started */}
+    <div className="flex flex-col">
+      <label className="text-gray-900 text-lg font-bold" htmlFor="date_started">Date Started</label>
+      <input
+        type="date"
+        id="date_started"
+        name="date_started"
+        value={formData.date_started}
+        onChange={handleChange}
+        className="bg-transparent border-b-2 border-blue-300 text-gray-900 text-lg p-2 focus:outline-none focus:border-blue-500 font-bold"
+        required
+      />
+    </div>
+
+    {/* Due Date */}
+    <div className="flex flex-col">
+      <label className="text-gray-900 text-lg font-bold" htmlFor="due_date">Due Date</label>
+      <input
+        type="datetime-local"
+        id="due_date"
+        name="due_date"
+        value={formData.due_date}
+        onChange={handleChange}
+        className="bg-transparent border-b-2 border-blue-300 text-gray-900 text-lg p-2 focus:outline-none focus:border-blue-500 font-bold"
+        required
+      />
+    </div>
+
+    {/* Tags */}
+    <div className="flex flex-col">
+      <label className="text-gray-900 text-lg font-bold" htmlFor="tags">Tags</label>
+      <input
+        type="text"
+        id="tags"
+        name="tags"
+        placeholder="Add tags here"
+        value={formData.tags}
+        onChange={handleChange}
+        className="bg-transparent border-b-2 border-blue-300 text-gray-900 text-lg p-2 focus:outline-none focus:border-blue-500 font-bold"
+      />
+    </div>
+
+    {/* Collaborators */}
+    <div className="flex flex-col gap-2">
+      <label className="text-gray-900 text-lg font-bold" htmlFor="collaborators">Collaborators</label>
+      <select
+        id="collaborators"
+        name="collaborators"
+        value={formData.collaborators?.[0] || ""}
+        onChange={(e) =>
+          setFormData({ ...formData, collaborators: [parseInt(e.target.value)] })
+        }
+        className="bg-blue-100 text-gray-900 text-lg p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold"
+      >
+        <option value="" disabled>Select a collaborator</option>
+        {users.filter((user) => user.id !== Number(userId)).map(user => (
+          <option key={user.id} value={user.id}>
+            {user.username}
+          </option>
+        ))}
+      </select>
+    </div>
+
+    {/* Submit Button */}
+    <button
+      type="submit"
+      className="bg-blue-600 text-white text-lg font-bold py-3 rounded-lg shadow-md hover:bg-blue-500 transition-all"
+    >
+      {editId ? "UPDATE" : "ADD"} TASK
+    </button>
+  </form>
+</div>
+
       </div>
     </div>
   );
