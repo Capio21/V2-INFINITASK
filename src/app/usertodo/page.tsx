@@ -256,7 +256,7 @@ const Dashboard = () => {
         task.description
       )}
     </td>
-                    <td className="px-2 py-3 font-bold text-center">{task.user?.username}</td>
+                    <td className="px-2 py-3 font-bold text-center">{task.user.username}</td>
                     <td className="px-2 py-3 font-bold text-center">{task.deadline}</td>
                     <td className="px-2 py-3 font-bold text-center">{task.time_started}</td>
                     <td className="px-2 py-3 font-bold text-center">{task.time_ended}</td>
