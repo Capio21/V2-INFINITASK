@@ -469,27 +469,32 @@ const ActivityPage = () => {
         >
           <div className={`grid ${isMobile ? "grid-cols-1" : "grid-cols-4"} gap-3`}>
             {statuses.map((status) => (
-              <button
-                key={status}
-                className="flex items-center justify-center w-full px-3 py-2 bg-blue-200 text-blue-800 rounded-md hover:bg-blue-300 transition"
-                onClick={() => {
-                  setSelectedStatus(status.toLowerCase());
-                  setOpen(false);
-                }}
-              >
-                <span className="text-xl">
-                  {status === "Pending"
-                    ? "⏳"
-                    : status === "Complete"
-                    ? "✅"
-                    : status === "Overdue"
-                    ? "❌"
-                    : status === "Archived"
-                    ? "📦"
-                    : "❓"}
-                </span>
-                {!isMobile && <span className="ml-2 text-sm font-medium">{status}</span>}
-              </button>
+            <button
+  key={status}
+  className={`flex items-center justify-center w-full px-3 py-2 rounded-md transition
+    ${selectedStatus === status.toLowerCase()
+      ? "bg-blue-400 text-white"
+      : "bg-blue-200 text-blue-800 hover:bg-blue-300"}
+  `}
+  onClick={() => {
+    setSelectedStatus(status.toLowerCase());
+    setOpen(false);
+  }}
+>
+  <span className="text-xl">
+    {status === "Pending"
+      ? "⏳"
+      : status === "Complete"
+      ? "✅"
+      : status === "Overdue"
+      ? "❌"
+      : status === "Archived"
+      ? "📦"
+      : "❓"}
+  </span>
+  {!isMobile && <span className="ml-2 text-sm font-medium">{status}</span>}
+</button>
+
             ))}
           </div>
         </div>
