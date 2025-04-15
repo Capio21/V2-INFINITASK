@@ -514,173 +514,181 @@ const ActivityPage = () => {
 
 <div className="flex justify-center w-full px-4 sm:px-6">
   <div className="w-full max-w-auto p-4 sm:p-6 rounded-lg">
-    {currentActivities.length > 0 && (
-      <div className="relative p-6 sm:p-8 bg-white text-gray-800 rounded-xl shadow-xl flex flex-col w-full border border-blue-100">
-        <span
-          className={`absolute top-4 right-4 px-3 py-1 text-xs sm:text-sm font-semibold rounded-full border border-blue-300 uppercase ${
-            currentActivities[0].status === "pending"
-              ? "bg-yellow-100 text-yellow-800"
-              : currentActivities[0].status === "complete"
-              ? "bg-green-100 text-green-800"
-              : "bg-red-100 text-red-800"
-          }`}
-        >
-          📌 {currentActivities[0].status.toUpperCase()}
-        </span>
+    {/* Scrollable container for mobile */}
+    <div className="max-h-[90vh] overflow-y-auto">
+      {currentActivities.length > 0 && (
+        <div className="relative p-6 sm:p-8 bg-white text-gray-800 rounded-xl shadow-xl flex flex-col w-full border border-blue-100">
+          {/* Status Badge */}
+          <span
+            className={`absolute top-4 right-4 px-3 py-1 text-xs sm:text-sm font-semibold rounded-full border border-blue-300 uppercase ${
+              currentActivities[0].status === "pending"
+                ? "bg-yellow-100 text-yellow-800"
+                : currentActivities[0].status === "complete"
+                ? "bg-green-100 text-green-800"
+                : "bg-red-100 text-red-800"
+            }`}
+          >
+            📌 {currentActivities[0].status.toUpperCase()}
+          </span>
 
-        <br />
+          <br />
 
-        {/* Info Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-sm sm:text-base mb-8">
-          <div className="bg-blue-50 p-4 rounded-lg shadow-sm border border-blue-100 text-center">
-            <p className="text-blue-600 font-semibold mb-1">📝 Title</p>
-            <p className="text-gray-800">{currentActivities[0].title}</p>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg shadow-sm border border-blue-100 text-center">
-            <p className="text-blue-600 font-semibold mb-1">📅 Due</p>
-            <p className="text-gray-800">
-              {new Date(currentActivities[0].due_date).toLocaleDateString(
-                "en-US",
-                {
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
-                }
-              ).toUpperCase()}{" "}
-              ⏰{" "}
-              {new Date(currentActivities[0].due_date).toLocaleTimeString(
-                "en-US",
-                {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: true,
-                }
-              )}
-            </p>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg shadow-sm border border-blue-100 text-center">
-            <p className="text-blue-600 font-semibold mb-1">🏷️ Tags</p>
-            <p className="text-gray-800">{currentActivities[0].tags}</p>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg shadow-sm border border-blue-100 text-center md:col-span-3">
-            <p className="text-blue-600 font-semibold mb-1">👥 Collaborators</p>
-            <p className="text-gray-800">
-              {currentActivities[0].collaborator_name}
-            </p>
-          </div>
-        </div>
-
-        {/* Task Description List - Responsive Grid */}
-        <div className="mt-4">
-          <div className="w-full bg-white shadow-md rounded-lg border border-blue-100">
-            <div className="bg-blue-600 text-white text-center py-4 text-lg font-semibold rounded-t-lg">
-              📋 Task Description List
+          {/* Info Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-sm sm:text-base mb-8">
+            {/* Title */}
+            <div className="bg-blue-50 p-4 rounded-lg shadow-sm border border-blue-100 text-center">
+              <p className="text-blue-600 font-semibold mb-1">📝 Title</p>
+              <p className="text-gray-800">{currentActivities[0].title}</p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
-              {currentActivities[0].description
-                .replace(/[\[\]"]/g, "")
-                .replace(/\s+/g, " ")
-                .split(",")
-                .map((item, index) => (
-                  <div
-                    key={index}
-                    className="bg-blue-50 border border-blue-100 rounded-md p-3 text-sm sm:text-base text-gray-800 shadow-sm hover:bg-blue-100 transition"
-                  >
-                    {index + 1}. {item.trim()}
-                  </div>
-                ))}
+
+            {/* Due */}
+            <div className="bg-blue-50 p-4 rounded-lg shadow-sm border border-blue-100 text-center">
+              <p className="text-blue-600 font-semibold mb-1">📅 Due</p>
+              <p className="text-gray-800">
+                {new Date(currentActivities[0].due_date).toLocaleDateString(
+                  "en-US",
+                  {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  }
+                ).toUpperCase()}{" "}
+                ⏰{" "}
+                {new Date(currentActivities[0].due_date).toLocaleTimeString(
+                  "en-US",
+                  {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: true,
+                  }
+                )}
+              </p>
+            </div>
+
+            {/* Tags */}
+            <div className="bg-blue-50 p-4 rounded-lg shadow-sm border border-blue-100 text-center">
+              <p className="text-blue-600 font-semibold mb-1">🏷️ Tags</p>
+              <p className="text-gray-800">{currentActivities[0].tags}</p>
+            </div>
+
+            {/* Collaborators */}
+            <div className="bg-blue-50 p-4 rounded-lg shadow-sm border border-blue-100 text-center md:col-span-3">
+              <p className="text-blue-600 font-semibold mb-1">👥 Collaborators</p>
+              <p className="text-gray-800">
+                {currentActivities[0].collaborator_name}
+              </p>
             </div>
           </div>
-        </div>
 
-        {/* Buttons Section */}
-        <div className="flex flex-wrap justify-center gap-3 mt-6">
-          {currentActivities[0].status !== "overdue" && (
-            <button
-              onClick={() => handleEdit(currentActivities[0])}
-              className="px-4 py-2 rounded-md bg-blue-600 text-white text-sm font-medium hover:bg-blue-500 transition"
-            >
-              ✏️ Edit
-            </button>
-          )}
+          {/* Task Description List */}
+          <div className="mt-4">
+            <div className="w-full bg-white shadow-md rounded-lg border border-blue-100">
+              <div className="bg-blue-600 text-white text-center py-4 text-lg font-semibold rounded-t-lg">
+                📋 Task Description List
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
+                {currentActivities[0].description
+                  .replace(/[\[\]"]/g, "")
+                  .replace(/\s+/g, " ")
+                  .split(",")
+                  .map((item, index) => (
+                    <div
+                      key={index}
+                      className="bg-blue-50 border border-blue-100 rounded-md p-3 text-sm sm:text-base text-gray-800 shadow-sm hover:bg-blue-100 transition"
+                    >
+                      {index + 1}. {item.trim()}
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </div>
 
-          {currentActivities[0].status === "pending" &&
-            !currentActivities[0].archive && (
+          {/* Buttons Section */}
+          <div className="flex flex-wrap justify-center gap-3 mt-6">
+            {currentActivities[0].status !== "overdue" && (
               <button
-                onClick={() => handleMarkAsDone(currentActivities[0].id)}
-                className="px-4 py-2 rounded-md bg-green-600 text-white text-sm font-medium hover:bg-green-500 transition"
+                onClick={() => handleEdit(currentActivities[0])}
+                className="px-4 py-2 rounded-md bg-blue-600 text-white text-sm font-medium hover:bg-blue-500 transition"
               >
-                ✅ Done
+                ✏️ Edit
               </button>
             )}
 
-          {currentActivities[0].archive ? (
+            {currentActivities[0].status === "pending" &&
+              !currentActivities[0].archive && (
+                <button
+                  onClick={() => handleMarkAsDone(currentActivities[0].id)}
+                  className="px-4 py-2 rounded-md bg-green-600 text-white text-sm font-medium hover:bg-green-500 transition"
+                >
+                  ✅ Done
+                </button>
+              )}
+
+            {currentActivities[0].archive ? (
+              <button
+                onClick={() => handleRestore(currentActivities[0].id)}
+                className="px-4 py-2 rounded-md bg-yellow-500 text-white text-sm font-medium hover:bg-yellow-400 transition"
+              >
+                🔄 Restore
+              </button>
+            ) : (
+              <button
+                onClick={() => handleArchiveClick(currentActivities[0].id)}
+                className="px-4 py-2 rounded-md bg-yellow-500 text-white text-sm font-medium hover:bg-yellow-400 transition"
+              >
+                📁 Archive
+              </button>
+            )}
+
             <button
-              onClick={() => handleRestore(currentActivities[0].id)}
-              className="px-4 py-2 rounded-md bg-yellow-500 text-white text-sm font-medium hover:bg-yellow-400 transition"
+              onClick={() => handleDeleteClick(currentActivities[0].id)}
+              className="px-4 py-2 rounded-md bg-red-600 text-white text-sm font-medium hover:bg-red-500 transition"
             >
-              🔄 Restore
+              🗑️ Delete
             </button>
-          ) : (
+          </div>
+
+          {/* Pagination */}
+          <div className="flex justify-between items-center mt-6 text-xs sm:text-sm">
             <button
-              onClick={() => handleArchiveClick(currentActivities[0].id)}
-              className="px-4 py-2 rounded-md bg-yellow-500 text-white text-sm font-medium hover:bg-yellow-400 transition"
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="bg-blue-600 p-2 rounded text-white flex items-center gap-1 hover:bg-blue-500 disabled:opacity-50"
             >
-              📁 Archive
+              <ChevronLeft size={16} /> Prev
             </button>
-          )}
+            <span className="font-semibold text-gray-700">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+              className="bg-blue-600 p-2 rounded text-white flex items-center gap-1 hover:bg-blue-500 disabled:opacity-50"
+            >
+              Next <ChevronRight size={16} />
+            </button>
+          </div>
 
-          <button
-            onClick={() => handleDeleteClick(currentActivities[0].id)}
-            className="px-4 py-2 rounded-md bg-red-600 text-white text-sm font-medium hover:bg-red-500 transition"
-          >
-            🗑️ Delete
-          </button>
+          {/* Modals */}
+          <Confirmation
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onConfirm={handleDeleteConfirm}
+            title="Delete Activity"
+            message="Are you sure you want to delete this activity? This action cannot be undone."
+          />
+          <Archive
+            isOpen={isArchiveModalOpen}
+            onClose={() => setIsArchiveModalOpen(false)}
+            onConfirm={handleArchiveConfirm}
+            title="Archive Activity"
+            message="Are you sure you want to archive this activity? You can restore it later."
+          />
         </div>
-
-        {/* Pagination */}
-        <div className="flex justify-between items-center mt-6 text-xs sm:text-sm">
-          <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-            className="bg-blue-600 p-2 rounded text-white flex items-center gap-1 hover:bg-blue-500 disabled:opacity-50"
-          >
-            <ChevronLeft size={16} /> Prev
-          </button>
-          <span className="font-semibold text-gray-700">
-            Page {currentPage} of {totalPages}
-          </span>
-          <button
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
-            disabled={currentPage === totalPages}
-            className="bg-blue-600 p-2 rounded text-white flex items-center gap-1 hover:bg-blue-500 disabled:opacity-50"
-          >
-            Next <ChevronRight size={16} />
-          </button>
-        </div>
-
-        {/* Modals */}
-        <Confirmation
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onConfirm={handleDeleteConfirm}
-          title="Delete Activity"
-          message="Are you sure you want to delete this activity? This action cannot be undone."
-        />
-        <Archive
-          isOpen={isArchiveModalOpen}
-          onClose={() => setIsArchiveModalOpen(false)}
-          onConfirm={handleArchiveConfirm}
-          title="Archive Activity"
-          message="Are you sure you want to archive this activity? You can restore it later."
-        />
-      </div>
-    )}
+      )}
+    </div>
   </div>
 </div>
 
