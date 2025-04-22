@@ -201,7 +201,7 @@ export default function Register() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-gray-900 px-4 overflow-hidden">
+    <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-black px-4">
       <ToastContainer />
       <Image
         src="/cram.png"
@@ -210,16 +210,16 @@ export default function Register() {
         objectFit="cover"
         className="absolute top-0 left-0 w-full h-full opacity-20"
       />
-      <div className="relative bg-white/80 backdrop-blur-md p-6 rounded-lg shadow-lg w-full max-w-md border border-blue-600">
+  <div className="relative z-10 bg-white/30 backdrop-blur-md border border-blue-500 shadow-xl rounded-2xl p-8 w-full max-w-md">
       <div className="flex items-center justify-center">
           <img src="/infini.png" alt="Logo" className="w-36 h-36 rounded-full object-cover" /> {/* Make logo circular */}
         </div>
           <br />
-          <h2 className="text-2xl sm:text-3xl font-bold text-blue-600 text-center mb-4 sm:mb-6">
-  <span className="uppercase">INFINI</span>
-  <span className="mx-2">|</span>
-  <span>Sign-up</span>
-</h2>
+          <h2 className="text-3xl font-bold text-center text-white mb-6 tracking-wide">
+            <span className="text-blue-400">INFINI</span>
+            <span className="mx-2 text-gray-200">|</span>
+            <span className="text-blue-100">Sign-up</span>
+          </h2>
         
         <br />
         
