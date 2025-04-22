@@ -64,109 +64,110 @@ export default function Login() {
         <title>Login | Infinitech</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-
-      {/* Background Image */}
-      <div className="relative min-h-screen flex flex-col items-center justify-center bg-gray-900 px-4 sm:px-0">
+  
+      {/* Background Container */}
+      <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-black px-4">
+        {/* Background Image */}
         <Image
           src="/cram.png"
-          alt="Task Management Background"
+          alt="Background"
           layout="fill"
           objectFit="cover"
-          className="absolute top-0 left-0 w-full h-full opacity-20"
+          className="absolute top-0 left-0 w-full h-full opacity-10"
         />
-
-        {/* Login Box */}
-        <div className="relative bg-white/80 backdrop-blur-md p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-sm border border-blue-600">
-            {/* Logo */}
-        <div className="flex items-center justify-center">
-          <img src="/infini.png" alt="Logo" className="w-36 h-36 rounded-full object-cover" /> {/* Make logo circular */}
-        </div>
-          <br />
-          <h2 className="text-2xl sm:text-3xl font-bold text-blue-600 text-center mb-4 sm:mb-6">
-  <span className="uppercase">INFINI</span>
-  <span className="mx-2">|</span>
-  <span>Sign-in</span>
-</h2>
-          <form onSubmit={handleLogin} className="space-y-4 sm:space-y-5">
+  
+        {/* Login Card */}
+        <div className="relative z-10 bg-white/30 backdrop-blur-md border border-blue-500 shadow-xl rounded-2xl p-8 w-full max-w-md">
+          {/* Logo */}
+          <div className="flex justify-center mb-6">
+            <img src="/infini.png" alt="Infinitech Logo" className="w-28 h-28 rounded-full shadow-lg object-cover" />
+          </div>
+  
+          {/* Title */}
+          <h2 className="text-3xl font-bold text-center text-white mb-6 tracking-wide">
+            <span className="text-blue-400">INFINI</span>
+            <span className="mx-2 text-gray-200">|</span>
+            <span className="text-blue-100">Sign-in</span>
+          </h2>
+  
+          {/* Login Form */}
+          <form onSubmit={handleLogin} className="space-y-5">
+            {/* Username */}
             <div>
-              <label className="block text-gray-700 text-sm sm:text-lg font-medium mb-2">
-                Username
-              </label>
+              <label className="block text-white font-semibold mb-2">Username</label>
               <input
                 type="text"
                 value={username}
                 onChange={(e) => {
                   const inputValue = e.target.value;
-                  // Check if the input value starts with "INFINI-"
                   if (!inputValue.startsWith("INFINI-")) {
                     setUsername("INFINI-" + inputValue);
                   } else {
                     setUsername(inputValue);
                   }
                 }}
-                className="w-full px-4 py-2 sm:py-3 border border-gray-300 bg-gray-100 text-gray-800 rounded-lg focus:ring focus:ring-blue-500"
                 placeholder="Enter your username"
+                className="w-full px-4 py-3 rounded-lg bg-white/80 text-gray-800 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 required
               />
             </div>
-
-            {/* Password Field with Toggle */}
+  
+            {/* Password */}
             <div className="relative">
-              <label className="block text-gray-700 text-sm sm:text-lg font-medium mb-2">
-                Password
-              </label>
+              <label className="block text-white font-semibold mb-2">Password</label>
               <input
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 sm:py-3 border border-gray-300 bg-gray-100 text-gray-800 rounded-lg focus:ring focus:ring-blue-500 pr-12"
                 placeholder="Enter your password"
+                className="w-full px-4 py-3 pr-12 rounded-lg bg-white/80 text-gray-800 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 required
               />
               <button
                 type="button"
-                className="absolute right-4 top-10 sm:top-11 text-gray-400 hover:text-blue-600"
+                className="absolute right-4 top-10 text-gray-500 hover:text-blue-600"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <EyeOffIcon size={22} /> : <EyeIcon size={22} />}
               </button>
             </div>
-
-            {/* Buttons */}
-            <div className="flex flex-col items-center space-y-3">
-              <button
-                type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-500 text-white py-2 sm:py-3 rounded-lg text-sm sm:text-lg transition font-semibold flex items-center justify-center"
-                disabled={loading}
-              >
-                {loading ? (
-                  <>
-                    <div className="animate-spin rounded-full border-4 border-white border-t-transparent h-5 w-5 mr-2"></div>
-                    Signing in...
-                  </>
-                ) : (
-                  "Sign in"
-                )}
-              </button>
-
-              <button
-                type="button"
-                className="w-full bg-gray-300 hover:bg-gray-200 text-gray-800 py-2 sm:py-3 rounded-lg text-sm sm:text-lg transition"
-                onClick={() => router.push("/")}
-              >
-                ⬅ Back to Landing Page
-              </button>
-            </div>
+  
+            {/* Submit */}
+            <button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-lg flex justify-center items-center transition duration-300"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-2" />
+                  Signing in...
+                </>
+              ) : (
+                "Sign in"
+              )}
+            </button>
           </form>
-
-          <p className="text-sm sm:text-lg text-center text-gray-600 mt-4">
-            New here?{" "}
-            <a href="/Signup" className="text-blue-600 hover:underline">
-              Create an account
+  
+          {/* Navigation */}
+          <div className="flex justify-between items-center mt-6 text-sm sm:text-base">
+            <button
+              type="button"
+              onClick={() => router.push("/")}
+              className="text-blue-300 hover:text-white transition  "
+            >
+              Back to Home
+            </button>
+            <a
+              href="/Signup"
+              className="text-blue-300 hover:text-white transition "
+            >
+              Create an account!
             </a>
-          </p>
+          </div>
         </div>
       </div>
     </>
   );
+  
 }
