@@ -99,22 +99,27 @@ export default function LandingPage() {
 
   return (
     <div className="landing-page">
-      <header className="header">
-        <div className="container">
-          <div className="logo">
-            <Image src="/infini.png" alt="Infini Task Logo" width={80} height={25} />
-          </div>
-          <nav className="nav">
-            <ul className="nav-menu"></ul>
-          </nav>
-          <div className="auth-buttons">
-            <Link href="/Signup" className="signup-btn">
-              Sign-up
-            </Link>
-          
-          </div>
-        </div>
-      </header>
+       <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/20 shadow-sm">
+  <div className="container mx-auto flex items-center justify-between px-4 py-3">
+    <div className="logo">
+      <Image src="/infini.png" alt="Infini Task Logo" width={80} height={25} />
+    </div>
+    <nav className="nav">
+      <ul className="nav-menu flex gap-6 text-white font-medium">
+        {/* You can add nav links here if needed */}
+      </ul>
+    </nav>
+    <div className="auth-buttons flex gap-4">
+    
+      <Link
+        href="/Signup"
+        className="signup-btn bg-deepskyblue text-white px-4 py-2 rounded-full shadow hover:bg-sky-500 transition"
+      >
+        Sign-up and Gets started
+      </Link>
+    </div>
+  </div>
+</header>
 
       <main>
         {/* Hero Section with Background Video */}
