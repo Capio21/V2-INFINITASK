@@ -165,6 +165,7 @@ const TodoPage = () => {
       <div className="hidden md:block w-64"></div>
   
       <main className="flex-1 px-6 py-8 overflow-y-auto">
+              <br />
         {/* Header */}
         <header className="flex items-center justify-center mb-10">
           <div className="w-full text-center">
