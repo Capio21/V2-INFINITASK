@@ -438,11 +438,15 @@ const ActivityPage = () => {
         <br />
 
         <div className="flex items-center justify-center mb-6">
-          <div className="flex-grow border-t border-blue-300"></div>
-          <span className="mx-10 text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-300">
-            PERSONAL TASK
-          </span>
-          <div className="flex-grow border-t border-blue-300"></div>
+ <header className="flex items-center justify-center mb-10">
+          <div className="w-full text-center">
+          
+            <h1 className="text-4xl h-auto font-extrabold bg-gradient-to-r from-blue-500 to-cyan-300 bg-clip-text text-transparent drop-shadow-md">
+              Personal task Dashboard
+            </h1>
+            <p className="text-sm text-gray-400 mt-2">Manage your daily tasks and track progress</p>
+          </div>
+        </header>
         </div>
         <ProgressBar percentage={completionPercentage} />
         <div className="mt-4">
