@@ -168,7 +168,7 @@ const TodoPage = () => {
         {/* Header */}
         <header className="flex items-center justify-center mb-10">
           <div className="w-full text-center">
-            <h1 className="text-4xl font-extrabold bg-gradient-to-r from-blue-500 to-cyan-300 bg-clip-text text-transparent drop-shadow-md">
+            <h1 className="text-4xl h-auto font-extrabold bg-gradient-to-r from-blue-500 to-cyan-300 bg-clip-text text-transparent drop-shadow-md">
               Admin Task Dashboard
             </h1>
             <p className="text-sm text-gray-400 mt-2">Manage your daily tasks and track progress</p>
