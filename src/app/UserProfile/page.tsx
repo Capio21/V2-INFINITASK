@@ -146,70 +146,86 @@ const TodoPage = () => {
         </div>
       </div>
 
-      {/* Sliding Edit Form */}
-      <div
-        className={`fixed top-0 right-0 h-full w-full sm:w-96 bg-blue-100 p-6 transition-transform transform ${
-          editing ? "translate-x-0" : "translate-x-full"
-        } shadow-lg z-50 flex flex-col items-center justify-center border-2 border-blue-300 rounded-l-lg`}
-      >
-        <h2 className="text-xl font-bold text-center text-gray-800 mb-4">Edit Profile</h2>
-        
-        {/* Image Preview */}
-        {imagePreview && (
-          <div className="mb-4">
-            <img
-              src={imagePreview}
-              alt="Preview"
-              className="w-24 h-24 object-cover rounded-full border-2 border-blue-400"
-            />
-          </div>
-        )}
+   {/* Sliding Edit Form */}
+<div
+  className={`fixed top-0 right-0 h-full w-full sm:w-[30rem] bg-gradient-to-br from-gray-900 via-gray-900 to-gray-900 p-8 transition-transform transform ${
+    editing ? "translate-x-0" : "translate-x-full"
+  } shadow-2xl z-50 flex flex-col items-center border-l-4 border-blue-400 rounded-l-3xl`}
+>
+  <h2 className="text-2xl font-bold text-blue-900 mb-6 text-center">
+    Edit Profile
+  </h2>
 
-        <div className="flex flex-col mb-4 w-full">
-          <label className="text-gray-800" htmlFor="username">Employee Name:</label>
-          <input
-            id="username"
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="p-2 rounded-md bg-blue-50 text-gray-800 border border-blue-400 focus:outline-none focus:ring focus:ring-blue-500"
-            placeholder="Username"
-          />
-        </div>
-        <div className="flex flex-col mb-4 w-full">
-          <label className="text-gray-800" htmlFor="email">Personal Email:</label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="p-2 rounded-md bg-blue-50 text-gray-800 border border-blue-400 focus:outline-none focus:ring focus:ring-blue-500"
-            placeholder="Email"
-          />
-        </div>
-        <div className="flex flex-col mb-4 w-full">
-          <label className="text-gray-800" htmlFor="profileImage">Profile Image:</label>
-          <input
-            type="file"
-            onChange={handleImageChange}
-            className="p-2 rounded-md bg-blue-50 text-gray-800 border border-blue-400 focus:outline-none focus:ring focus:ring-blue-500"
-          />
-        </div>
-        <div className="flex justify-between mt-4 w-full">
-          <button
-            onClick={handleSave}
-            className="bg-blue-500 hover:bg-blue-400 py-2 px-4 rounded-md text-lg font-bold transition duration-200"
-          >
-            <FaSave className="mr-2 inline" /> Save
-          </button>
-          <button
-            onClick={() => setEditing(false)}
-            className="bg-red-500 hover:bg-red-400 py-2 px-4 rounded-md text-lg font-bold transition duration-200"
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
+  {/* Image Preview */}
+  {imagePreview && (
+    <div className="mb-6">
+      <img
+        src={imagePreview}
+        alt="Preview"
+        className="w-28 h-28 object-cover rounded-full border-4 border-blue-500 shadow-md"
+      />
+    </div>
+  )}
+
+  {/* Username */}
+  <div className="flex flex-col mb-5 w-full">
+    <label className="text-blue-800 font-semibold mb-1" htmlFor="username">
+      Employee Name:
+    </label>
+    <input
+      id="username"
+      type="text"
+      value={username}
+      onChange={(e) => setUsername(e.target.value)}
+      className="p-3 rounded-lg bg-white text-blue-900 border border-blue-300 shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-400"
+      placeholder="Enter employee name"
+    />
+  </div>
+
+  {/* Email */}
+  <div className="flex flex-col mb-5 w-full">
+    <label className="text-blue-800 font-semibold mb-1" htmlFor="email">
+      Personal Email:
+    </label>
+    <input
+      id="email"
+      type="email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      className="p-3 rounded-lg bg-white text-blue-900 border border-blue-300 shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-400"
+      placeholder="Enter email"
+    />
+  </div>
+
+  {/* Image Upload */}
+  <div className="flex flex-col mb-6 w-full">
+    <label className="text-blue-800 font-semibold mb-1" htmlFor="profileImage">
+      Profile Image:
+    </label>
+    <input
+      id="profileImage"
+      type="file"
+      onChange={handleImageChange}
+      className="p-3 rounded-lg bg-white text-blue-900 border border-blue-300 shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-400"
+    />
+  </div>
+
+  {/* Action Buttons */}
+  <div className="flex justify-between gap-4 w-full mt-4">
+    <button
+      onClick={handleSave}
+      className="flex items-center justify-center bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-5 rounded-lg shadow-lg transition"
+    >
+      <FaSave className="mr-2" /> Save
+    </button>
+    <button
+      onClick={() => setEditing(false)}
+      className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-5 rounded-lg shadow-lg transition"
+    >
+      Cancel
+    </button>
+  </div>
+</div>
     </div>
   );
 };
