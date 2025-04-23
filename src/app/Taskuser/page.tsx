@@ -516,22 +516,21 @@ const ActivityPage = () => {
   </div>
 </div>
 
-
-<div className="flex justify-center w-full px-4 sm:px-6">
+<div className="flex justify-center w-full px-4 sm:px-6 bg-[#0f0f1a] min-h-screen">
   <div className="w-full max-w-auto p-4 sm:p-6 rounded-lg">
-    {/* Scrollable container for mobile */}
     <div className="max-h-[90vh] overflow-y-auto">
       {currentActivities.length > 0 && (
-        <div className="relative p-6 sm:p-8 bg-white text-gray-800 rounded-xl shadow-xl flex flex-col w-full border border-blue-100">
+        <div className="relative p-6 sm:p-8 bg-[#1a1a2e] text-cyan-200 rounded-xl shadow-xl flex flex-col w-full border border-cyan-400/20 backdrop-blur-md">
           {/* Status Badge */}
           <span
-            className={`absolute top-4 right-4 px-3 py-1 text-xs sm:text-sm font-semibold rounded-full border border-blue-300 uppercase ${
-              currentActivities[0].status === "pending"
-                ? "bg-yellow-100 text-yellow-800"
-                : currentActivities[0].status === "complete"
-                ? "bg-green-100 text-green-800"
-                : "bg-red-100 text-red-800"
-            }`}
+            className={`absolute top-4 right-4 px-3 py-1 text-xs sm:text-sm font-semibold rounded-full border uppercase glow-shadow 
+              ${
+                currentActivities[0].status === "pending"
+                  ? "bg-yellow-900 text-yellow-300 border-yellow-400"
+                  : currentActivities[0].status === "complete"
+                  ? "bg-green-900 text-green-300 border-green-400"
+                  : "bg-red-900 text-red-300 border-red-400"
+              }`}
           >
             📌 {currentActivities[0].status.toUpperCase()}
           </span>
@@ -540,46 +539,34 @@ const ActivityPage = () => {
 
           {/* Info Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-sm sm:text-base mb-8">
-            {/* Title */}
-            <div className="bg-blue-50 p-4 rounded-lg shadow-sm border border-blue-100 text-center">
-              <p className="text-blue-600 font-semibold mb-1">📝 Title</p>
-              <p className="text-gray-800">{currentActivities[0].title}</p>
+            <div className="bg-[#2a2a40] p-4 rounded-lg shadow-md border border-cyan-400/20 text-center">
+              <p className="text-cyan-300 font-semibold mb-1">📝 Title</p>
+              <p className="text-cyan-100">{currentActivities[0].title}</p>
             </div>
 
-            {/* Due */}
-            <div className="bg-blue-50 p-4 rounded-lg shadow-sm border border-blue-100 text-center">
-              <p className="text-blue-600 font-semibold mb-1">📅 Due</p>
-              <p className="text-gray-800">
+            <div className="bg-[#2a2a40] p-4 rounded-lg shadow-md border border-cyan-400/20 text-center">
+              <p className="text-cyan-300 font-semibold mb-1">📅 Due</p>
+              <p className="text-cyan-100">
                 {new Date(currentActivities[0].due_date).toLocaleDateString(
                   "en-US",
-                  {
-                    month: "long",
-                    day: "numeric",
-                    year: "numeric",
-                  }
+                  { month: "long", day: "numeric", year: "numeric" }
                 ).toUpperCase()}{" "}
                 ⏰{" "}
                 {new Date(currentActivities[0].due_date).toLocaleTimeString(
                   "en-US",
-                  {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: true,
-                  }
+                  { hour: "2-digit", minute: "2-digit", hour12: true }
                 )}
               </p>
             </div>
 
-            {/* Tags */}
-            <div className="bg-blue-50 p-4 rounded-lg shadow-sm border border-blue-100 text-center">
-              <p className="text-blue-600 font-semibold mb-1">🏷️ Tags</p>
-              <p className="text-gray-800">{currentActivities[0].tags}</p>
+            <div className="bg-[#2a2a40] p-4 rounded-lg shadow-md border border-cyan-400/20 text-center">
+              <p className="text-cyan-300 font-semibold mb-1">🏷️ Tags</p>
+              <p className="text-cyan-100">{currentActivities[0].tags}</p>
             </div>
 
-            {/* Collaborators */}
-            <div className="bg-blue-50 p-4 rounded-lg shadow-sm border border-blue-100 text-center md:col-span-3">
-              <p className="text-blue-600 font-semibold mb-1">👥 Collaborators</p>
-              <p className="text-gray-800">
+            <div className="bg-[#2a2a40] p-4 rounded-lg shadow-md border border-cyan-400/20 text-center md:col-span-3">
+              <p className="text-cyan-300 font-semibold mb-1">👥 Collaborators</p>
+              <p className="text-cyan-100">
                 {currentActivities[0].collaborator_name}
               </p>
             </div>
@@ -587,8 +574,8 @@ const ActivityPage = () => {
 
           {/* Task Description List */}
           <div className="mt-4">
-            <div className="w-full bg-white shadow-md rounded-lg border border-blue-100">
-              <div className="bg-blue-600 text-white text-center py-4 text-lg font-semibold rounded-t-lg">
+            <div className="w-full bg-[#1e1e30] shadow-md rounded-lg border border-cyan-400/20">
+              <div className="bg-gradient-to-r from-cyan-500 to-fuchsia-600 text-white text-center py-4 text-lg font-semibold rounded-t-lg">
                 📋 Task Description List
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
@@ -599,7 +586,7 @@ const ActivityPage = () => {
                   .map((item, index) => (
                     <div
                       key={index}
-                      className="bg-blue-50 border border-blue-100 rounded-md p-3 text-sm sm:text-base text-gray-800 shadow-sm hover:bg-blue-100 transition"
+                      className="bg-[#2a2a40] border border-cyan-400/20 rounded-md p-3 text-sm sm:text-base text-cyan-100 shadow-sm hover:bg-[#3b3b5c] transition"
                     >
                       {index + 1}. {item.trim()}
                     </div>
@@ -613,7 +600,7 @@ const ActivityPage = () => {
             {currentActivities[0].status !== "overdue" && (
               <button
                 onClick={() => handleEdit(currentActivities[0])}
-                className="px-4 py-2 rounded-md bg-blue-600 text-white text-sm font-medium hover:bg-blue-500 transition"
+                className="px-4 py-2 rounded-md bg-cyan-600 text-white text-sm font-medium hover:bg-cyan-500 transition glow-shadow"
               >
                 ✏️ Edit
               </button>
@@ -623,7 +610,7 @@ const ActivityPage = () => {
               !currentActivities[0].archive && (
                 <button
                   onClick={() => handleMarkAsDone(currentActivities[0].id)}
-                  className="px-4 py-2 rounded-md bg-green-600 text-white text-sm font-medium hover:bg-green-500 transition"
+                  className="px-4 py-2 rounded-md bg-green-600 text-white text-sm font-medium hover:bg-green-500 transition glow-shadow"
                 >
                   ✅ Done
                 </button>
@@ -632,14 +619,14 @@ const ActivityPage = () => {
             {currentActivities[0].archive ? (
               <button
                 onClick={() => handleRestore(currentActivities[0].id)}
-                className="px-4 py-2 rounded-md bg-yellow-500 text-white text-sm font-medium hover:bg-yellow-400 transition"
+                className="px-4 py-2 rounded-md bg-yellow-500 text-white text-sm font-medium hover:bg-yellow-400 transition glow-shadow"
               >
                 🔄 Restore
               </button>
             ) : (
               <button
                 onClick={() => handleArchiveClick(currentActivities[0].id)}
-                className="px-4 py-2 rounded-md bg-yellow-500 text-white text-sm font-medium hover:bg-yellow-400 transition"
+                className="px-4 py-2 rounded-md bg-yellow-500 text-white text-sm font-medium hover:bg-yellow-400 transition glow-shadow"
               >
                 📁 Archive
               </button>
@@ -647,22 +634,22 @@ const ActivityPage = () => {
 
             <button
               onClick={() => handleDeleteClick(currentActivities[0].id)}
-              className="px-4 py-2 rounded-md bg-red-600 text-white text-sm font-medium hover:bg-red-500 transition"
+              className="px-4 py-2 rounded-md bg-red-600 text-white text-sm font-medium hover:bg-red-500 transition glow-shadow"
             >
               🗑️ Delete
             </button>
           </div>
 
           {/* Pagination */}
-          <div className="flex justify-between items-center mt-6 text-xs sm:text-sm">
+          <div className="flex justify-between items-center mt-6 text-xs sm:text-sm text-cyan-300">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className="bg-blue-600 p-2 rounded text-white flex items-center gap-1 hover:bg-blue-500 disabled:opacity-50"
+              className="bg-cyan-600 p-2 rounded text-white flex items-center gap-1 hover:bg-cyan-500 disabled:opacity-50 glow-shadow"
             >
               <ChevronLeft size={16} /> Prev
             </button>
-            <span className="font-semibold text-gray-700">
+            <span className="font-semibold">
               Page {currentPage} of {totalPages}
             </span>
             <button
@@ -670,7 +657,7 @@ const ActivityPage = () => {
                 setCurrentPage((prev) => Math.min(prev + 1, totalPages))
               }
               disabled={currentPage === totalPages}
-              className="bg-blue-600 p-2 rounded text-white flex items-center gap-1 hover:bg-blue-500 disabled:opacity-50"
+              className="bg-cyan-600 p-2 rounded text-white flex items-center gap-1 hover:bg-cyan-500 disabled:opacity-50 glow-shadow"
             >
               Next <ChevronRight size={16} />
             </button>
@@ -696,6 +683,7 @@ const ActivityPage = () => {
     </div>
   </div>
 </div>
+
 
           {/* Pagination Controls */}
         </div>
