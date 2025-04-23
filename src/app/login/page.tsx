@@ -28,8 +28,7 @@ export default function Login() {
     }
 
     try {
-      const response = await axios.post(
-        "https://infinitech-api5.site/api/login",
+      const response = await axios.post("https://infinitech-api5.site/api/login",
         { username, password },
         { withCredentials: true }
       );
