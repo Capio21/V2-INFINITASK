@@ -692,183 +692,154 @@ const ActivityPage = () => {
           {/* Pagination Controls */}
         </div>
 
-        {/* Right Sidebar for Adding/Editing Activity */}
-        <div
-          className={`fixed inset-y-0 right-0 transform transition-transform duration-300 ${
-            isOpen ? "translate-x-0" : "translate-x-full"
-          }  bg-blue-100 w-full max-w-md p-6 sm:p-10 shadow-2xl rounded-l-lg z-50 border-4 border-blue-700`}
-        >
-          <button
-            onClick={() => resetForm()}
-            className="absolute top-4 right-4 text-gray-900 text-2xl font-bold hover:text-gray-600"
-          >
-            ×
-          </button>
+   {/* Medium Right Sidebar for Adding/Editing Activity */}
+<div
+  className={`fixed top-0 right-0 h-full w-full max-w-xl border-l-4 border-blue-900 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-8 sm:p-10 shadow-2xl z-50 transform transition-transform duration-300 ${
+    isOpen ? "translate-x-0" : "translate-x-full"
+  }`}
+>
+  {/* Close Button */}
+  <button
+    onClick={resetForm}
+    className="absolute top-4 right-4 text-white text-2xl font-bold hover:text-gray-300"
+  >
+    &times;
+  </button>
 
-          <h2 className="text-xl sm:text-2xl font-bold mb-6 text-center text-blue-600">
-            {editId ? "EDIT" : "ADD"} TASK
-          </h2>
+  {/* Header */}
+  <h2 className="text-3xl font-extrabold mb-6 text-center">
+    {editId ? "EDIT" : "ADD"} TASK
+  </h2>
 
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-4 sm:gap-6 overflow-y-auto max-h-[80vh] pr-2"
-          >
-            {/* Title */}
-            <div className="flex flex-col">
-              <label
-                className="text-gray-900 text-lg font-bold"
-                htmlFor="title"
-              >
-                Title
-              </label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                placeholder="Add title here"
-                value={formData.title}
-                onChange={handleChange}
-                className="bg-transparent border-b-2 border-blue-300 text-gray-900 text-lg p-2 focus:outline-none focus:border-blue-500 font-bold"
-                required
-              />
-            </div>
+  {/* Form */}
+  <form
+    onSubmit={handleSubmit}
+    className="flex flex-col gap-5 overflow-y-auto max-h-[85vh] pr-1"
+  >
+    {/* Title */}
+    <div className="flex flex-col">
+      <label htmlFor="title" className="text-base font-medium mb-1">Title</label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        placeholder="Enter title"
+        value={formData.title}
+        onChange={handleChange}
+        className="rounded-lg px-4 py-2 text-base bg-white text-blue-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-400"
+        required
+      />
+    </div>
 
-            {/* Descriptions Section */}
-            <div className="flex flex-col">
-              <label className="text-gray-900 text-lg font-bold">
-                Descriptions
-              </label>
-
-              <div className="grid grid-cols-1 gap-4 max-h-60 overflow-y-auto pr-1">
-                {(formData.description || []).map((desc, index) => (
-                  <div key={index} className="flex items-center gap-2">
-                    <input
-                      type="text"
-                      placeholder={`Task ${index + 1}`}
-                      value={desc}
-                      onChange={(e) =>
-                        handleDescriptionChange(index, e.target.value)
-                      }
-                      className="flex-grow bg-transparent border-b-2 border-blue-300 text-gray-900 text-lg p-2 focus:outline-none focus:border-blue-500 font-bold"
-                    />
-                    {index > 0 && (
-                      <button
-                        type="button"
-                        onClick={() => removeDescriptionField(index)}
-                        className="text-red-500 font-bold"
-                      >
-                        ✕
-                      </button>
-                    )}
-                  </div>
-                ))}
-              </div>
-
+    {/* Descriptions */}
+    <div className="flex flex-col">
+      <label className="text-base font-medium mb-1">Descriptions</label>
+      <div className="grid grid-cols-1 gap-3 max-h-52 overflow-y-auto pr-1">
+        {(formData.description || []).map((desc, index) => (
+          <div key={index} className="flex items-center gap-2">
+            <input
+              type="text"
+              placeholder={`Task ${index + 1}`}
+              value={desc}
+              onChange={(e) => handleDescriptionChange(index, e.target.value)}
+              className="flex-grow rounded-lg px-4 py-2 text-base bg-white text-blue-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            {index > 0 && (
               <button
                 type="button"
-                onClick={addDescriptionField}
-                className="mt-3 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold py-2 px-4 rounded shadow-md transition-all w-fit"
+                onClick={() => removeDescriptionField(index)}
+                className="text-red-200 hover:text-red-500 font-bold text-lg"
               >
-                + Add Task
+                ×
               </button>
-            </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <button
+        type="button"
+        onClick={addDescriptionField}
+        className="mt-3 bg-white text-blue-700 hover:bg-blue-100 font-semibold py-2 px-4 rounded-lg shadow"
+      >
+        + Add Task
+      </button>
+    </div>
 
-            {/* Date Started */}
-            <div className="flex flex-col">
-              <label
-                className="text-gray-900 text-lg font-bold"
-                htmlFor="date_started"
-              >
-                Date Started
-              </label>
-              <input
-                type="date"
-                id="date_started"
-                name="date_started"
-                value={formData.date_started}
-                onChange={handleChange}
-                className="bg-transparent border-b-2 border-blue-300 text-gray-900 text-lg p-2 focus:outline-none focus:border-blue-500 font-bold"
-                required
-              />
-            </div>
+    {/* Date Started */}
+    <div className="flex flex-col">
+      <label htmlFor="date_started" className="text-base font-medium mb-1">Date Started</label>
+      <input
+        type="date"
+        id="date_started"
+        name="date_started"
+        value={formData.date_started}
+        onChange={handleChange}
+        className="rounded-lg px-4 py-2 text-base bg-white text-blue-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-400"
+        required
+      />
+    </div>
 
-            {/* Due Date */}
-            <div className="flex flex-col">
-              <label
-                className="text-gray-900 text-lg font-bold"
-                htmlFor="due_date"
-              >
-                Due Date
-              </label>
-              <input
-                type="datetime-local"
-                id="due_date"
-                name="due_date"
-                value={formData.due_date}
-                onChange={handleChange}
-                className="bg-transparent border-b-2 border-blue-300 text-gray-900 text-lg p-2 focus:outline-none focus:border-blue-500 font-bold"
-                required
-              />
-            </div>
+    {/* Due Date */}
+    <div className="flex flex-col">
+      <label htmlFor="due_date" className="text-base font-medium mb-1">Due Date</label>
+      <input
+        type="datetime-local"
+        id="due_date"
+        name="due_date"
+        value={formData.due_date}
+        onChange={handleChange}
+        className="rounded-lg px-4 py-2 text-base bg-white text-blue-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-400"
+        required
+      />
+    </div>
 
-            {/* Tags */}
-            <div className="flex flex-col">
-              <label className="text-gray-900 text-lg font-bold" htmlFor="tags">
-                Tags
-              </label>
-              <input
-                type="text"
-                id="tags"
-                name="tags"
-                placeholder="Add tags here"
-                value={formData.tags}
-                onChange={handleChange}
-                className="bg-transparent border-b-2 border-blue-300 text-gray-900 text-lg p-2 focus:outline-none focus:border-blue-500 font-bold"
-              />
-            </div>
+    {/* Tags */}
+    <div className="flex flex-col">
+      <label htmlFor="tags" className="text-base font-medium mb-1">Tags</label>
+      <input
+        type="text"
+        id="tags"
+        name="tags"
+        placeholder="E.g. urgent, school"
+        value={formData.tags}
+        onChange={handleChange}
+        className="rounded-lg px-4 py-2 text-base bg-white text-blue-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+    </div>
 
-            {/* Collaborators */}
-            <div className="flex flex-col gap-2">
-              <label
-                className="text-gray-900 text-lg font-bold"
-                htmlFor="collaborators"
-              >
-                Collaborators
-              </label>
-              <select
-                id="collaborators"
-                name="collaborators"
-                value={formData.collaborators?.[0] || ""}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    collaborators: [parseInt(e.target.value)],
-                  })
-                }
-                className="bg-blue-100 text-gray-900 text-lg p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold"
-              >
-                <option value="" disabled>
-                  Select a collaborator
-                </option>
-                {users
-                  .filter((user) => user.id !== Number(userId))
-                  .map((user) => (
-                    <option key={user.id} value={user.id}>
-                      {user.username}
-                    </option>
-                  ))}
-              </select>
-            </div>
+    {/* Collaborators */}
+    <div className="flex flex-col">
+      <label htmlFor="collaborators" className="text-base font-medium mb-1">Collaborators</label>
+      <select
+        id="collaborators"
+        name="collaborators"
+        value={formData.collaborators?.[0] || ""}
+        onChange={(e) =>
+          setFormData({ ...formData, collaborators: [parseInt(e.target.value)] })
+        }
+        className="rounded-lg px-4 py-2 text-base bg-white text-blue-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-400"
+      >
+        <option value="" disabled>Select a collaborator</option>
+        {users
+          .filter((user) => user.id !== Number(userId))
+          .map((user) => (
+            <option key={user.id} value={user.id}>
+              {user.username}
+            </option>
+          ))}
+      </select>
+    </div>
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="bg-blue-600 text-white text-lg font-bold py-3 rounded-lg shadow-md hover:bg-blue-500 transition-all"
-            >
-              {editId ? "UPDATE" : "ADD"} TASK
-            </button>
-          </form>
-        </div>
+    {/* Submit Button */}
+    <button
+      type="submit"
+      className="mt-6 bg-white text-blue-800 text-lg font-bold py-2 rounded-xl shadow-md hover:bg-blue-100 transition-all"
+    >
+      {editId ? "UPDATE" : "ADD"} TASK
+    </button>
+  </form>
+</div>
+
       </div>
     </div>
   );
