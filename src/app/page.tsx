@@ -108,12 +108,10 @@ export default function LandingPage() {
             <ul className="nav-menu"></ul>
           </nav>
           <div className="auth-buttons">
-            <Link href="/login" className="login-btn">
-              Log in
+            <Link href="/Signup" className="login-btn">
+              Sign-up
             </Link>
-            <Link href="/Signup" className="signup-btn">
-              Get Started
-            </Link>
+          
           </div>
         </div>
       </header>
@@ -137,8 +135,8 @@ export default function LandingPage() {
               task management system.
             </p>
             <div className="hero-buttons">
-              <Link href="/Signup" className="primary-btn">
-                Get Started Free
+              <Link href="/login" className="primary-btn">
+                Access your Dashboard
               </Link>
             </div>
           </div>
