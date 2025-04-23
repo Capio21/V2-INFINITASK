@@ -108,7 +108,7 @@ export default function LandingPage() {
             <ul className="nav-menu"></ul>
           </nav>
           <div className="auth-buttons">
-            <Link href="/Signup" className="login-btn">
+            <Link href="/Signup" className="signup-btn">
               Sign-up
             </Link>
           
