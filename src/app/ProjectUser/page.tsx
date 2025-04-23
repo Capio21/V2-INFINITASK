@@ -155,213 +155,194 @@ const TodoPage = () => {
     return () => clearInterval(checkAlarms);
   }, [tasks]);
 
-  return (
-    <div className="flex min-h-screen bg-gray-900 text-gray-900">
-      <ToastContainer position="top-right" autoClose={3000} /> {/* ToastContainer for notifications */}
-
+    return (
+    <div className="min-h-screen flex bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white font-sans">
+      <ToastContainer position="top-right" autoClose={3000} />
+  
       <Sidebar />
-      <div className="sticky top-0 h-screen w-64 bg-blue-100 shadow-lg hidden md:block">
-      </div>
-
-      <div className="flex-1 p-4 md:p-9 flex flex-col items-center">
-        <br />
-        <br />
-        <div className="flex items-center justify-center mb-6">
-          <div className="flex-grow border-t border-blue-300"></div>
-          <span className="mx-10 text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-300">
-            ADMIN TASK
-          </span>
-          <div className="flex-grow border-t border-blue-300"></div>
-        </div>
-        {/* Dashboard Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8 w-full">
-          <div className="bg-blue-600 p-4 rounded-lg shadow-lg text-white text-center">
-            <h2 className="text-lg font-bold">Completed</h2>
-            <p className="text-2xl">{completedTasks}</p>
+  
+      {/* Sidebar Spacer (if needed for layout symmetry) */}
+      <div className="hidden md:block w-64"></div>
+  
+      <main className="flex-1 px-6 py-8 overflow-y-auto">
+        {/* Header */}
+        <header className="flex items-center justify-center mb-10">
+          <div className="w-full text-center">
+            <h1 className="text-4xl font-extrabold bg-gradient-to-r from-blue-500 to-cyan-300 bg-clip-text text-transparent drop-shadow-md">
+              Admin Task Dashboard
+            </h1>
+            <p className="text-sm text-gray-400 mt-2">Manage your daily tasks and track progress</p>
           </div>
-          <div className="bg-yellow-600 p-4 rounded-lg shadow-lg text-white text-center">
-            <h2 className="text-lg font-bold">Pending</h2>
-            <p className="text-2xl">{pendingTasks}</p>
+        </header>
+  
+        {/* Progress Bar */}
+        <section className="w-full max-w-3xl mx-auto mb-10">
+          <div className="relative h-6 bg-blue-100 rounded-full overflow-hidden shadow-inner">
+            <motion.div
+              className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-400 to-blue-600"
+              initial={{ width: "0%" }}
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+            />
+            <span className="absolute inset-0 flex justify-center items-center font-semibold text-blue-900">
+              {Math.round(progress)}%
+            </span>
           </div>
-          <div className="bg-red-600 p-4 rounded-lg shadow-lg text-white text-center">
-            <h2 className="text-lg font-bold">Overdue</h2>
-            <p className="text-2xl">{overdueTasks}</p>
-          </div>
-          <div className="bg-gray-600 p-4 rounded-lg shadow-lg text-white text-center">
-            <h2 className="text-lg font-bold">Total Tasks</h2>
-            <p className="text-2xl">{totalTasks}</p>
-          </div>
-        </div>
-
-        <div className="relative w-full h-6 bg-blue-200 rounded-lg shadow-lg overflow-hidden">
-          {/* 3D Background Layer */}
-          <div className="absolute inset-0 bg-blue-300 rounded-lg shadow-inner" />
-
-          {/* Animated Progress */}
-          <motion.div
-            className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-lg shadow-md"
-            initial={{ width: "0%" }}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.6, ease: "easeInOut" }}
-          />
-
-          {/* Text Display */}
-          <span className="absolute inset-0 flex justify-center items-center text-white font-bold drop-shadow-lg">
-            {Math.round(progress)}%
-          </span>
-        </div>
-        <br />
-
+        </section>
+  
+        {/* Summary Cards */}
+        <section className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+          {[
+            { label: 'Completed', value: completedTasks, color: 'bg-green-600' },
+            { label: 'Pending', value: pendingTasks, color: 'bg-yellow-600' },
+            { label: 'Overdue', value: overdueTasks, color: 'bg-red-600' },
+            { label: 'Total Tasks', value: totalTasks, color: 'bg-gray-600' }
+          ].map((item, idx) => (
+            <div key={idx} className={`${item.color} p-4 rounded-xl shadow-lg text-center`}>
+              <h2 className="text-lg font-semibold">{item.label}</h2>
+              <p className="text-3xl font-bold">{item.value}</p>
+            </div>
+          ))}
+        </section>
         {loading ? (
-          <p>Loading tasks...</p>
-        ) : error ? (
-          <p className="text-red-500">{error}</p>
-        ) : (
-          currentTask && (
-            <div className="relative min-w-full border-2 border-blue-300 bg-blue-100 p-4 shadow-lg transition-all rounded-lg flex flex-col items-center text-gray-900 text-center w-full md:w-3/4 lg:w-1/2">
-              {currentTask.tags && (
-                <div
-                  className={`absolute top-2 left-2 text-white text-xs font-bold px-2 py-1 rounded-lg shadow-lg ${
-                    currentTask.tags.includes("Hard")
-                      ? "bg-red-500"
-                      : currentTask.tags.includes("Medium")
-                      ? "bg-orange-500"
-                      : "bg-green-500"
-                  }`}
-                >
-                  {Array.isArray(currentTask.tags) ? currentTask.tags.join(", ") : currentTask.tags}
-                </div>
-              )}
-              <br />
+  <p className="text-cyan-400 animate-pulse">Loading tasks...</p>
+) : error ? (
+  <p className="text-red-500">{error}</p>
+) : currentTask && (
+  <section className="max-w-auto mx-auto bg-[#1a1a2e] text-cyan-100 p-6 rounded-2xl shadow-lg border border-cyan-700">
 
-              <div className="absolute top-2 right-2">
-                <span
-                  className={`px-3 py-1 rounded-full text-sm font-bold ${
-                    currentTask.status === "complete"
-                      ? "bg-green-200 text-green-800"
-                      : currentTask.status === "overdue"
-                      ? "bg-red-200 text-red-800"
-                      : "bg-yellow-200 text-yellow-800"
-                  }`}
-                >
-                  {currentTask.status.toUpperCase()}
-                </span>
-              </div>
-              <br />
+    {/* Pagination - Top Right */}
+    <div className="flex justify-end items-center gap-3 mb-4 text-cyan-400 text-sm font-mono">
+      <button
+        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+        disabled={currentPage === 1}
+        className="bg-cyan-800 px-3 py-1 rounded disabled:opacity-30 hover:bg-cyan-700 transition"
+      >
+        &#9664;
+      </button>
+      <span>Page {currentPage} of {totalPages}</span>
+      <button
+        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+        disabled={currentPage === totalPages}
+        className="bg-cyan-800 px-3 py-1 rounded disabled:opacity-30 hover:bg-cyan-700 transition"
+      >
+        &#9654;
+      </button>
+    </div>
 
-              <h3 className="bg-blue-600 text-white text-lg font-bold p-2 rounded-md w-full">
-                {currentTask.title}
-              </h3>
-              <img
-                src={
-                  currentTask.status === "complete"
-                    ? "/gifs/success.gif"
-                    : currentTask.status === "overdue"
-                    ? "/gifs/overdue.gif"
-                    : "/gifs/pending.gif"
-                }
-                alt={currentTask.status}
-                className="w-30 h-30 mt-3"
-              />
-
-              {/* Scrollable Description with See More functionality */}
-              <div className={`overflow-y-auto ${isExpanded ? 'h-64' : 'h-40'} w-full border  p-4`}>
-                {isExpanded 
-                  ? currentTask.description 
-                  : currentTask.description.length > 100 
-                    ? currentTask.description.substring(0, 100) + '...' 
-                    : currentTask.description}
-              </div>
-              {currentTask.description.length > 100 && (
-                <button
-                  onClick={() => setIsExpanded(!isExpanded)}
-                  className="mt-2 text-blue-400 hover:underline"
-                >
-                  {isExpanded ? 'Show Less' : 'Show More'}
-                </button>
-              )}
-
-              <br />
-              <p
-                className={`font-bold ${
-                  currentTask.status === "overdue" ? "text-red-500" : "text-gray-700"
-                }`}
-              >
-                <strong>Deadline:</strong> {(() => {
-                  const date = new Date(currentTask.deadline);
-                  const options = { day: 'numeric', month: 'long', year: 'numeric' };
-                  
-                  // Format the date
-                  const formattedDate = date.toLocaleDateString('en-US', options)
-                    .toUpperCase()
-                    .replace(/, /g, '-')
-                    .replace(/ /g, '-');
-
-                  // Format the time
-                  const formattedTime = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-
-                  // Combine date and time
-                  return `${formattedDate}-${formattedTime}`;
-                })()}
-              </p>
-
-              {currentTask.status !== "complete" && currentTask.status !== "overdue" && (
-                <button
-                  onClick={() => {
-                    setSelectedTask(currentTask);
-                    setShowModal(true);
-                  }}
-                  className="w-full py-2 border-2 border-blue-300 shadow-md font-bold transition-all cursor-pointer mt-2 bg-blue-600 hover:bg-blue-500"
-                >
-                  Mark as Done
-                </button>
-              )}
-              <div className="flex justify-between w-full mt-4">
-                <button
-                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                  disabled={currentPage === 1}
-                  className="bg-gray-600 text-white px-4 py-2 rounded disabled:opacity-50"
-                >
-                  &#9664;
-                </button>
-                <span className="text-gray-900">
-                  Page {currentPage} of {totalPages}
-                </span>
-                <button
-                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                  disabled={currentPage === totalPages}
-                  className="bg-gray-600 text-white px-4 py-2 rounded disabled:opacity-50"
-                >
-                  &#9654;
-                </button>
-              </div>
-            </div>
-          )
-        )}
-      </div>
-
-      {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-blue-900 p-6 rounded-lg shadow-lg text-gray-300 w-96 text-center">
-            <h2 className="text-lg font-bold mb-4">Confirm Action</h2>
-            <p>Are you sure you want to mark "{selectedTask?.title}" as done?</p>
-            <div className="mt-4 flex justify-center space-x-4">
-              <button
-                onClick={markAsDone}
-                className="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-500"
-              >
-                Yes
-              </button>
-              <button
-                onClick={() => setShowModal(false)}
-                className="bg-red-600 text-white px-4 py-2 rounded shadow hover:bg-red-500"
-              >
-                No
-              </button>
-            </div>
-          </div>
+    {/* Tags and Status */}
+    <div className="flex justify-between items-start">
+      {currentTask.tags && (
+        <div className={`px-4 py-1 text-sm font-bold rounded-full tracking-wide border border-white/20
+          ${
+            currentTask.tags.includes("Hard") ? "bg-red-600 text-white" :
+            currentTask.tags.includes("Medium") ? "bg-yellow-500 text-black" :
+            "bg-green-500 text-black"
+          }
+        `}>
+          {Array.isArray(currentTask.tags) ? currentTask.tags.join(", ") : currentTask.tags}
         </div>
       )}
+      <span className={`px-4 py-1 rounded-full text-sm font-extrabold tracking-widest
+        ${
+          currentTask.status === "complete" ? "bg-green-300 text-green-900" :
+          currentTask.status === "overdue" ? "bg-red-300 text-red-900" :
+          "bg-yellow-200 text-yellow-800"
+        }
+      `}>
+        {currentTask.status.toUpperCase()}
+      </span>
+    </div>
+
+    {/* Title */}
+    <h3 className="mt-4 text-2xl font-black text-cyan-300">
+      {currentTask.title}
+    </h3>
+
+    {/* Status GIF */}
+    <img
+      src={
+        currentTask.status === "complete"
+          ? "/gifs/success.gif"
+          : currentTask.status === "overdue"
+          ? "/gifs/overdue.gif"
+          : "/gifs/pending.gif"
+      }
+      alt={currentTask.status}
+      className="h-40 mx-auto mt-4 rounded-lg shadow-inner "
+    />
+
+    {/* Description */}
+    <div className={`mt-6 overflow-y-auto border border-cyan-700 bg-[#0f0f1f] p-4 rounded-lg text-center ${isExpanded ? 'h-64' : 'h-40'}`}>
+      {isExpanded
+        ? currentTask.description
+        : currentTask.description.length > 100
+        ? currentTask.description.substring(0, 500) + '...'
+        : currentTask.description}
+    </div>
+
+    {currentTask.description.length > 100 && (
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="text-cyan-400 mt-2 hover:underline hover:text-cyan-300 block text-center w-full"
+      >
+        {isExpanded ? "Show Less" : "Show More"}
+      </button>
+    )}
+
+    {/* Deadline */}
+    <p className={`mt-4 font-bold text-md ${
+      currentTask.status === "overdue" ? "text-red-400" : "text-cyan-300"
+    }`}>
+      <strong>Deadline:</strong> {(() => {
+        const date = new Date(currentTask.deadline);
+        const formattedDate = date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase().replace(/, /g, '-').replace(/ /g, '-');
+        const formattedTime = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+        return `${formattedDate}-${formattedTime}`;
+      })()}
+    </p>
+
+    {/* Mark as Done */}
+    {currentTask.status !== "complete" && currentTask.status !== "overdue" && (
+      <button
+        onClick={() => {
+          setSelectedTask(currentTask);
+          setShowModal(true);
+        }}
+        className="mt-4 w-full py-2 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-md transition-all duration-200"
+      >
+        Mark as Done
+      </button>
+    )}
+  </section>
+)}
+
+
+  
+        {/* Modal */}
+        {showModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white text-gray-900 p-6 rounded-xl w-96 text-center shadow-2xl">
+              <h2 className="text-xl font-bold mb-4">Confirm Action</h2>
+              <p>Are you sure you want to mark <strong>{selectedTask?.title}</strong> as done?</p>
+              <div className="mt-6 flex justify-center space-x-4">
+                <button
+                  onClick={markAsDone}
+                  className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500"
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500"
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </main>
     </div>
   );
 };
