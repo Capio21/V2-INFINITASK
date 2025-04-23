@@ -156,7 +156,7 @@ const TodoPage = () => {
   }, [tasks]);
 
     return (
-    <div className="min-h-screen flex bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white font-sans">
+    <div className="min-h-screen flex bg-gradient-to-br from-gray-900 via-gray-900 to-gray-900 text-white font-sans">
       <ToastContainer position="top-right" autoClose={3000} />
   
       <Sidebar />
