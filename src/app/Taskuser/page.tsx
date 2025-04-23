@@ -516,7 +516,7 @@ const ActivityPage = () => {
   </div>
 </div>
 
-<div className="flex justify-center w-full px-4 sm:px-6  min-h-screen">
+<div className="flex justify-center w-full px-4 sm:px-6  min-h-auto">
   <div className="w-full max-w-auto p-4 sm:p-6 rounded-lg">
     <div className="max-h-[90vh] overflow-y-auto">
       {currentActivities.length > 0 && (
