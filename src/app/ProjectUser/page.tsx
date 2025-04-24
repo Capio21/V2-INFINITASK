@@ -8,6 +8,8 @@ import { ToastContainer, toast } from "react-toastify"; // Import toast and Toas
 import "react-toastify/dist/ReactToastify.css"; // Import CSS for toast notifications
 import authUser  from "../utils/authUser";
 import { motion } from "framer-motion";
+import { Clock, CheckCircle, AlertTriangle, Archive } from "lucide-react";
+
 
 const TodoPage = () => {
   const router = useRouter();
@@ -19,6 +21,7 @@ const TodoPage = () => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 1;
+  
 
   // Initialize the alarm sound
   const alarmSound = new Audio("/alarm-sound.mp3");
@@ -154,8 +157,7 @@ const TodoPage = () => {
 
     return () => clearInterval(checkAlarms);
   }, [tasks]);
-
-    return (
+  return (
     <div className="min-h-screen flex bg-gradient-to-br from-gray-900 via-gray-900 to-gray-900 text-white font-sans">
       <ToastContainer position="top-right" autoClose={3000} />
   
@@ -165,10 +167,11 @@ const TodoPage = () => {
       <div className="hidden md:block w-64"></div>
   
       <main className="flex-1 px-6 py-8 overflow-y-auto">
-              <br />
+        <br />
         {/* Header */}
         <header className="flex items-center justify-center mb-10">
           <div className="w-full text-center">
+          
             <h1 className="text-4xl h-auto font-extrabold bg-gradient-to-r from-blue-500 to-cyan-300 bg-clip-text text-transparent drop-shadow-md">
               Admin Task Dashboard
             </h1>
@@ -191,33 +194,40 @@ const TodoPage = () => {
           </div>
         </section>
   
-        {/* Summary Cards */}
-        <section className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
-          {[
-            { label: 'Completed', value: completedTasks, color: 'bg-green-600' },
-            { label: 'Pending', value: pendingTasks, color: 'bg-yellow-600' },
-            { label: 'Overdue', value: overdueTasks, color: 'bg-red-600' },
-            { label: 'Total Tasks', value: totalTasks, color: 'bg-gray-600' }
-          ].map((item, idx) => (
-            <div key={idx} className={`${item.color} p-4 rounded-xl shadow-lg text-center`}>
-              <h2 className="text-lg font-semibold">{item.label}</h2>
-              <p className="text-3xl font-bold">{item.value}</p>
-            </div>
-          ))}
-        </section>
-        {loading ? (
-  <p className="text-cyan-400 animate-pulse">Loading tasks...</p>
+      {/* Summary Cards - TikTok Style */}
+<section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+  {[
+    { label: 'Pending Tasks', value: pendingTasks, color: 'yellow-500', icon: <Clock size={18} className="text-yellow-500 mr-2" /> },
+    { label: 'Completed Tasks', value: completedTasks, color: 'green-500', icon: <CheckCircle size={18} className="text-green-500 mr-2" /> },
+    { label: 'Overdue Tasks', value: overdueTasks, color: 'red-500', icon: <AlertTriangle size={18} className="text-red-500 mr-2" /> },
+    { label: 'Total Tasks', value: totalTasks, color: 'gray-400', icon: <Archive size={18} className="text-gray-400 mr-2" /> },
+  ].map((item, idx) => (
+    <div key={idx} className="bg-gray-900 rounded-xl p-4 border border-gray-800">
+      <div className="flex items-center mb-3">
+        {item.icon}
+        <span className="font-medium text-white">{item.label}</span>
+        <span className={`ml-auto bg-gray-800 text-${item.color} px-2 py-0.5 rounded-full text-xs`}>
+          {item.value}
+        </span>
+      </div>
+      <p className="text-gray-400 text-sm">{item.label} description here</p>
+    </div>
+  ))}
+</section>
+
+{loading ? (
+  <p className="text-yellow-400 animate-pulse">Loading tasks...</p>
 ) : error ? (
   <p className="text-red-500">{error}</p>
 ) : currentTask && (
-  <section className="max-w-auto mx-auto bg-[#1a1a2e] text-cyan-100 p-6 rounded-2xl shadow-lg border border-cyan-700">
+  <section className="bg-gray-900 border border-gray-800 text-gray-200 rounded-xl p-6 shadow-md max-w-auto mx-auto">
 
     {/* Pagination - Top Right */}
-    <div className="flex justify-end items-center gap-3 mb-4 text-cyan-400 text-sm font-mono">
+    <div className="flex justify-end items-center gap-3 mb-4 text-yellow-400 text-sm font-mono">
       <button
         onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
         disabled={currentPage === 1}
-        className="bg-cyan-800 px-3 py-1 rounded disabled:opacity-30 hover:bg-cyan-700 transition"
+        className="bg-gray-800 px-3 py-1 rounded disabled:opacity-30 hover:bg-gray-700 transition"
       >
         &#9664;
       </button>
@@ -225,16 +235,16 @@ const TodoPage = () => {
       <button
         onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
         disabled={currentPage === totalPages}
-        className="bg-cyan-800 px-3 py-1 rounded disabled:opacity-30 hover:bg-cyan-700 transition"
+        className="bg-gray-800 px-3 py-1 rounded disabled:opacity-30 hover:bg-gray-700 transition"
       >
         &#9654;
       </button>
     </div>
 
     {/* Tags and Status */}
-    <div className="flex justify-between items-start">
+    <div className="flex justify-between items-start mb-2">
       {currentTask.tags && (
-        <div className={`px-4 py-1 text-sm font-bold rounded-full tracking-wide border border-white/20
+        <div className={`px-4 py-1 text-sm font-bold rounded-full tracking-wide border border-gray-600
           ${
             currentTask.tags.includes("Hard") ? "bg-red-600 text-white" :
             currentTask.tags.includes("Medium") ? "bg-yellow-500 text-black" :
@@ -244,7 +254,7 @@ const TodoPage = () => {
           {Array.isArray(currentTask.tags) ? currentTask.tags.join(", ") : currentTask.tags}
         </div>
       )}
-      <span className={`px-4 py-1 rounded-full text-sm font-extrabold tracking-widest
+      <span className={`px-4 py-1 rounded-full text-sm font-bold tracking-wider
         ${
           currentTask.status === "complete" ? "bg-green-300 text-green-900" :
           currentTask.status === "overdue" ? "bg-red-300 text-red-900" :
@@ -256,7 +266,7 @@ const TodoPage = () => {
     </div>
 
     {/* Title */}
-    <h3 className="mt-4 text-2xl font-black text-cyan-300">
+    <h3 className="mt-2 text-2xl font-extrabold text-white">
       {currentTask.title}
     </h3>
 
@@ -270,11 +280,11 @@ const TodoPage = () => {
           : "/gifs/pending.gif"
       }
       alt={currentTask.status}
-      className="h-40 mx-auto mt-4 rounded-lg shadow-inner "
+      className="h-40 mx-auto mt-4 rounded-lg shadow-inner"
     />
 
     {/* Description */}
-    <div className={`mt-6 overflow-y-auto border border-cyan-700 bg-[#0f0f1f] p-4 rounded-lg text-center ${isExpanded ? 'h-64' : 'h-40'}`}>
+    <div className={`mt-6 overflow-y-auto border border-gray-700 bg-gray-800 p-4 rounded-lg text-sm text-gray-300 text-center ${isExpanded ? 'h-64' : 'h-40'}`}>
       {isExpanded
         ? currentTask.description
         : currentTask.description.length > 100
@@ -285,15 +295,15 @@ const TodoPage = () => {
     {currentTask.description.length > 100 && (
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="text-cyan-400 mt-2 hover:underline hover:text-cyan-300 block text-center w-full"
+        className="text-yellow-400 mt-2 hover:underline block text-center w-full"
       >
         {isExpanded ? "Show Less" : "Show More"}
       </button>
     )}
 
     {/* Deadline */}
-    <p className={`mt-4 font-bold text-md ${
-      currentTask.status === "overdue" ? "text-red-400" : "text-cyan-300"
+    <p className={`mt-4 font-semibold ${
+      currentTask.status === "overdue" ? "text-red-400" : "text-yellow-300"
     }`}>
       <strong>Deadline:</strong> {(() => {
         const date = new Date(currentTask.deadline);
@@ -303,20 +313,21 @@ const TodoPage = () => {
       })()}
     </p>
 
-    {/* Mark as Done */}
+    {/* Mark as Done Button */}
     {currentTask.status !== "complete" && currentTask.status !== "overdue" && (
       <button
         onClick={() => {
           setSelectedTask(currentTask);
           setShowModal(true);
         }}
-        className="mt-4 w-full py-2 bg-cyan-600 hover:bg-cyan-500 text-black font-bold rounded-lg shadow-md transition-all duration-200"
+        className="mt-4 w-full py-2 bg-yellow-400 hover:bg-yellow-300 text-black font-bold rounded-lg shadow-lg transition-all duration-200"
       >
         Mark as Done
       </button>
     )}
   </section>
 )}
+
 
 
   
@@ -346,6 +357,7 @@ const TodoPage = () => {
       </main>
     </div>
   );
+  
 };
 
 export default authUser (TodoPage);
