@@ -692,22 +692,22 @@ const ActivityPage = () => {
           {/* Pagination Controls */}
         </div>
 
-   {/* Medium Right Sidebar for Adding/Editing Activity */}
+{/* Medium Right Sidebar for Adding/Editing Activity */}
 <div
-  className={`fixed top-0 right-0 h-full w-full max-w-xl border-l-4 border-blue-900 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-8 sm:p-10 shadow-2xl z-50 transform transition-transform duration-300 ${
+  className={`fixed top-0 right-0 h-full w-full max-w-xl border-l-4 border-cyan-500 bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-cyan-100 p-8 sm:p-10 shadow-[0_0_20px_rgba(0,255,255,0.2)] z-50 transform transition-transform duration-300 ${
     isOpen ? "translate-x-0" : "translate-x-full"
   }`}
 >
   {/* Close Button */}
   <button
     onClick={resetForm}
-    className="absolute top-4 right-4 text-white text-2xl font-bold hover:text-gray-300"
+    className="absolute top-4 right-4 text-cyan-300 text-2xl font-bold hover:text-red-400 transition"
   >
     &times;
   </button>
 
   {/* Header */}
-  <h2 className="text-3xl font-extrabold mb-6 text-center">
+  <h2 className="text-3xl font-extrabold mb-6 text-center tracking-wide">
     {editId ? "EDIT" : "ADD"} TASK
   </h2>
 
@@ -726,7 +726,7 @@ const ActivityPage = () => {
         placeholder="Enter title"
         value={formData.title}
         onChange={handleChange}
-        className="rounded-lg px-4 py-2 text-base bg-white text-blue-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="rounded-lg px-4 py-2 text-base bg-[#0f172a] text-cyan-100 border border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 shadow-inner"
         required
       />
     </div>
@@ -742,13 +742,13 @@ const ActivityPage = () => {
               placeholder={`Task ${index + 1}`}
               value={desc}
               onChange={(e) => handleDescriptionChange(index, e.target.value)}
-              className="flex-grow rounded-lg px-4 py-2 text-base bg-white text-blue-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="flex-grow rounded-lg px-4 py-2 text-base bg-[#0f172a] text-cyan-100 border border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
             />
             {index > 0 && (
               <button
                 type="button"
                 onClick={() => removeDescriptionField(index)}
-                className="text-red-200 hover:text-red-500 font-bold text-lg"
+                className="text-red-300 hover:text-red-500 font-bold text-lg"
               >
                 ×
               </button>
@@ -759,7 +759,7 @@ const ActivityPage = () => {
       <button
         type="button"
         onClick={addDescriptionField}
-        className="mt-3 bg-white text-blue-700 hover:bg-blue-100 font-semibold py-2 px-4 rounded-lg shadow"
+        className="mt-3 bg-cyan-800 hover:bg-cyan-700 text-white font-semibold py-2 px-4 rounded-lg shadow"
       >
         + Add Task
       </button>
@@ -774,7 +774,7 @@ const ActivityPage = () => {
         name="date_started"
         value={formData.date_started}
         onChange={handleChange}
-        className="rounded-lg px-4 py-2 text-base bg-white text-blue-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="rounded-lg px-4 py-2 text-base bg-[#0f172a] text-cyan-100 border border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         required
       />
     </div>
@@ -788,7 +788,7 @@ const ActivityPage = () => {
         name="due_date"
         value={formData.due_date}
         onChange={handleChange}
-        className="rounded-lg px-4 py-2 text-base bg-white text-blue-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="rounded-lg px-4 py-2 text-base bg-[#0f172a] text-cyan-100 border border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         required
       />
     </div>
@@ -803,7 +803,7 @@ const ActivityPage = () => {
         placeholder="E.g. urgent, school"
         value={formData.tags}
         onChange={handleChange}
-        className="rounded-lg px-4 py-2 text-base bg-white text-blue-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="rounded-lg px-4 py-2 text-base bg-[#0f172a] text-cyan-100 border border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
       />
     </div>
 
@@ -817,7 +817,7 @@ const ActivityPage = () => {
         onChange={(e) =>
           setFormData({ ...formData, collaborators: [parseInt(e.target.value)] })
         }
-        className="rounded-lg px-4 py-2 text-base bg-white text-blue-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="rounded-lg px-4 py-2 text-base bg-[#0f172a] text-cyan-100 border border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
       >
         <option value="" disabled>Select a collaborator</option>
         {users
@@ -833,12 +833,13 @@ const ActivityPage = () => {
     {/* Submit Button */}
     <button
       type="submit"
-      className="mt-6 bg-white text-blue-800 text-lg font-bold py-2 rounded-xl shadow-md hover:bg-blue-100 transition-all"
+      className="mt-6 bg-cyan-600 hover:bg-cyan-500 text-white text-lg font-bold py-2 rounded-xl shadow-md transition-all"
     >
       {editId ? "UPDATE" : "ADD"} TASK
     </button>
   </form>
 </div>
+
 
       </div>
     </div>
