@@ -453,66 +453,66 @@ const ActivityPage = () => {
         <div className="w-full flex flex-col md:flex-row md:justify-between items-center mb-6 px-4 gap-4">
           
 
-  {/* Button Section */}
-  <div className="w-full md:w-auto flex flex-col md:flex-row items-center justify-center gap-4">
-    
-    {/* STATUS Button with Dropdown */}
-    <div className="relative w-full md:w-auto">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full md:w-auto px-6 py-2 text-lg font-bold text-white bg-blue-600 border border-blue-300 rounded-lg shadow-md transition hover:bg-blue-500 hover:border-blue-200 active:bg-blue-400"
-      >
-        STATUS
-      </button>
-
-      {/* Dropdown */}
-      {open && (
-        <div
-          className={`absolute z-50 bg-blue-100 p-4 rounded-lg shadow-lg border border-blue-300 transition-all duration-300
-            ${isMobile ? "w-full left-1/2 transform -translate-x-1/2 mt-2 top-full" : "w-[500px] left-full ml-3 top-0"}`}
-        >
-          <div className={`grid ${isMobile ? "grid-cols-1" : "grid-cols-4"} gap-3`}>
-            {statuses.map((status) => (
-            <button
-  key={status}
-  className={`flex items-center justify-center w-full px-3 py-2 rounded-md transition
-    ${selectedStatus === status.toLowerCase()
-      ? "bg-blue-400 text-white"
-      : "bg-blue-200 text-blue-800 hover:bg-blue-300"}
-  `}
-  onClick={() => {
-    setSelectedStatus(status.toLowerCase());
-    setOpen(false);
-  }}
->
-  <span className="text-xl">
-    {status === "Pending"
-      ? "⏳"
-      : status === "Complete"
-      ? "✅"
-      : status === "Overdue"
-      ? "❌"
-      : status === "Archived"
-      ? "📦"
-      : "❓"}
-  </span>
-  {!isMobile && <span className="ml-2 text-sm font-medium">{status}</span>}
-</button>
-
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-
-    {/* CREATE/CANCEL Button */}
+{/* Button Section */}
+<div className="w-full md:w-auto flex flex-col md:flex-row items-center justify-center gap-2">
+  
+  {/* STATUS Button with Dropdown */}
+  <div className="relative w-full md:w-auto">
     <button
-      onClick={() => setIsOpen((prev) => !prev)}
-      className="w-full md:w-auto px-6 py-2 text-lg font-bold text-white bg-blue-600 border border-blue-300 rounded-lg shadow-md transition hover:bg-blue-500 hover:border-blue-200 active:bg-blue-400"
+      onClick={() => setOpen(!open)}
+      className="w-full md:w-auto px-4 py-1.5 text-sm font-semibold text-white bg-blue-600 border border-blue-300 rounded-lg shadow-md transition hover:bg-blue-500 hover:border-blue-200 active:bg-blue-400"
     >
-      {isOpen ? "CANCEL" : "CREATE"}
+      STATUS
     </button>
+
+    {/* Dropdown */}
+    {open && (
+      <div
+        className={`absolute z-50 bg-blue-100 p-3 rounded-lg shadow-lg border border-blue-300 transition-all duration-300
+          ${isMobile ? "w-full left-1/2 transform -translate-x-1/2 mt-2 top-full" : "w-[400px] left-full ml-3 top-0"}`}
+      >
+        <div className={`grid ${isMobile ? "grid-cols-1" : "grid-cols-4"} gap-2`}>
+          {statuses.map((status) => (
+            <button
+              key={status}
+              className={`flex items-center justify-center w-full px-3 py-1.5 rounded-md transition
+                ${selectedStatus === status.toLowerCase()
+                  ? "bg-blue-400 text-white"
+                  : "bg-blue-200 text-blue-800 hover:bg-blue-300"
+                }
+              `}
+              onClick={() => {
+                setSelectedStatus(status.toLowerCase());
+                setOpen(false);
+              }}
+            >
+              <span className="text-lg">
+                {status === "Pending"
+                  ? "⏳"
+                  : status === "Complete"
+                  ? "✅"
+                  : status === "Overdue"
+                  ? "❌"
+                  : status === "Archived"
+                  ? "📦"
+                  : "❓"}
+              </span>
+              {!isMobile && <span className="ml-2 text-xs font-medium">{status}</span>}
+            </button>
+          ))}
+        </div>
+      </div>
+    )}
   </div>
+
+  {/* CREATE/CANCEL Button */}
+  <button
+    onClick={() => setIsOpen((prev) => !prev)}
+    className="w-full md:w-auto px-4 py-1.5 text-sm font-semibold text-white bg-blue-600 border border-blue-300 rounded-lg shadow-md transition hover:bg-blue-500 hover:border-blue-200 active:bg-blue-400"
+  >
+    {isOpen ? "CANCEL" : "CREATE"}
+  </button>
+</div>
 
   {/* Progress Bar Section */}
   <div className="w-full md:w-auto mt-4 md:mt-0">
