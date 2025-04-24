@@ -70,9 +70,10 @@ const TodoList = () => {
     Overdue: activity.status === "overdue" ? 1 : 0,
   }));
 
-  // const handleChatClick = () => {
-  //   window.open("https://tawk.to/chat/67e3a3defdf8c219086c03df/1in8jg7nt", "_blank");
-  // };
+ const handleChatClick = () => {
+  window.location.href = "https://tawk.to/chat/67e3a3defdf8c219086c03df/1in8jg7nt";
+};
+
 
   return (
     <div className="flex bg-gray-900 text-white min-h-screen">
