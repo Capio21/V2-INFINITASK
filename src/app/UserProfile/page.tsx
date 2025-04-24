@@ -116,7 +116,7 @@ const TodoPage = () => {
 
   const chartData = Object.values(groupedData)
 
-  return (
+ return (
     <div className="flex min-h-auto bg-gray-900 text-white">
       
       <Sidebar />
@@ -224,7 +224,7 @@ const TodoPage = () => {
               <Bookmark size={18} className="inline mr-1" />
               Stats
             </button>
-          
+           
           </div>
         </div>
 
@@ -294,7 +294,7 @@ const TodoPage = () => {
           {activeTab === "stats" && (
             <div className="bg-gray-900 rounded-xl p-4 border border-gray-800">
               <h3 className="text-lg font-medium mb-4">Activity Overview</h3>
-              <div className="h-64">
+              <div className="h-96">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={chartData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
@@ -347,78 +347,81 @@ const TodoPage = () => {
         </div>
       </div>
 
-      {/* Edit Profile Modal */}
-      {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-          <div className="bg-gray-900 rounded-xl p-6 w-[90%] max-w-md border border-gray-800">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-bold">Edit Profile</h2>
-              <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-white">
-                <X size={20} />
-              </button>
-            </div>
+    {/* Edit Profile Modal */}
+{showModal && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-md px-4">
+    <div className="w-full max-w-lg bg-gradient-to-br from-gray-900/90 via-gray-800/90 to-gray-900/90 backdrop-blur-xl border border-gray-700 rounded-3xl shadow-2xl p-8 text-white relative">
+      
+      {/* Header */}
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold tracking-wide">Edit Profile</h2>
+        <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-red-400 transition duration-200">
+          <X size={24} />
+        </button>
+      </div>
 
-            {/* Profile Image */}
-            <div className="flex justify-center mb-6">
-              <div className="relative">
-                <img
-                  src={imagePreview || "/default-avatar.png"}
-                  alt="Preview"
-                  className="w-36 h-36 rounded-full object-cover border-2 border-gray-700"
-                  onError={(e) => {
-                    e.currentTarget.src = "/default-avatar.png"
-                  }}
-                />
-                <label className="absolute bottom-0 right-0 bg-blue-500 text-white p-2 rounded-full cursor-pointer">
-                  <Edit size={16} />
-                  <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
-                </label>
-              </div>
-            </div>
-
-            {/* Form Fields */}
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm text-gray-400 mb-1">Username</label>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Username"
-                  className="w-full p-2.5 bg-gray-800 border border-gray-700 rounded-lg text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm text-gray-400 mb-1">Email</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email"
-                  className="w-full p-2.5 bg-gray-800 border border-gray-700 rounded-lg text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                />
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex justify-end space-x-3 mt-6">
-              <button
-                onClick={() => setShowModal(false)}
-                className="px-4 py-2 border border-gray-700 rounded-lg text-gray-300 hover:bg-gray-800"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSave}
-                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg flex items-center"
-              >
-                <Save size={16} className="mr-2" /> Save
-              </button>
-            </div>
-          </div>
+      {/* Profile Image */}
+      <div className="flex justify-center mb-6">
+        <div className="relative group w-fit">
+          <img
+            src={imagePreview || "/default-avatar.png"}
+            alt="Preview"
+            className="w-36 h-36 rounded-full object-cover border-4 border-gray-700 shadow-md transition-transform duration-300 group-hover:scale-105"
+            onError={(e) => {
+              e.currentTarget.src = "/default-avatar.png";
+            }}
+          />
+          <label className="absolute bottom-0 right-0 bg-gradient-to-tr from-blue-600 to-blue-500 text-white p-2 rounded-full cursor-pointer shadow-lg hover:scale-105 transition duration-300">
+            <Edit size={18} />
+            <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
+          </label>
         </div>
-      )}
+      </div>
+
+      {/* Form Fields */}
+      <div className="space-y-5">
+        <div>
+          <label className="block text-sm text-gray-300 mb-1 font-medium">Username</label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Your username"
+            className="w-full px-4 py-2.5 bg-gray-800/80 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-500/40 transition"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm text-gray-300 mb-1 font-medium">Email</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@example.com"
+            className="w-full px-4 py-2.5 bg-gray-800/80 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-500/40 transition"
+          />
+        </div>
+      </div>
+
+      {/* Action Buttons */}
+      <div className="flex justify-end gap-4 mt-8">
+        <button
+          onClick={() => setShowModal(false)}
+          className="px-4 py-2.5 border border-gray-600 text-gray-300 rounded-xl hover:bg-gray-700 transition duration-200"
+        >
+          Cancel
+        </button>
+        <button
+          onClick={handleSave}
+          className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white rounded-xl shadow-md flex items-center gap-2 transition duration-300"
+        >
+          <Save size={18} /> Save
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   )
 }
