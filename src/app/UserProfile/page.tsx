@@ -117,7 +117,7 @@ const TodoPage = () => {
   const chartData = Object.values(groupedData)
 
   return (
-    <div className="flex min-h-auto bg-gray-800 text-white">
+    <div className="flex min-h-auto bg-gray-900 text-white">
       <Sidebar />
       <ToastContainer />
 
@@ -128,7 +128,7 @@ const TodoPage = () => {
           {/* Cover Photo/Background */}
           <br />
           <br />
-          <div className="h-48 bg-gray-800"></div>
+          <div className="h-48 bg-gray-900"></div>
 
           {/* Profile Section */}
           <div className="px-4 relative -mt-16 pb-4 border-b border-gray-800">
