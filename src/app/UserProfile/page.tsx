@@ -118,20 +118,35 @@ const TodoPage = () => {
 
   return (
     <div className="flex min-h-auto bg-gray-900 text-white">
+      
       <Sidebar />
       <ToastContainer />
-
+      
+     
       <div className="sticky top-0 h-screen w-64 bg-blue-100 shadow-lg hidden md:block"></div>
-      <div className="flex-grow">
+      <div className="flex-grow h-auto">
+  
+          <div className="w-full text-center">
+          <br />
+          <br />
+          <br />
+            <h1 className="text-4xl h-auto font-extrabold bg-gradient-to-r from-blue-500 to-cyan-300 bg-clip-text text-transparent drop-shadow-md">
+              Admin Task Dashboard
+            </h1>
+            <p className="text-sm text-gray-400 mt-2">Manage your daily tasks and track progress</p>
+          </div>
+
         {/* TikTok-style Profile Header */}
-        <div className="relative">
+        <div className=" relative">
           {/* Cover Photo/Background */}
           <br />
           <br />
-          <div className="h-48 bg-gray-900"></div>
+          <div className="h-auto bg-gray-900"></div>
+          <br />
+          <br />
 
           {/* Profile Section */}
-          <div className="px-4 relative -mt-16 pb-4 border-b border-gray-800">
+          <div className="px-4 relative -mt-16 pb-4 border-b border-blue-900">
             {loading ? (
               <div className="flex justify-center items-center h-32">
                 <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
@@ -230,7 +245,7 @@ const TodoPage = () => {
               {/* Task Cards */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Pending Tasks */}
-                <div className="bg-gray-900 rounded-xl p-4 border border-gray-800">
+                <div className="bg-gray-800 rounded-xl p-4 border border-gray-800">
                   <div className="flex items-center mb-3">
                     <Clock size={18} className="text-yellow-500 mr-2" />
                     <span className="font-medium">Pending Tasks</span>
@@ -243,7 +258,7 @@ const TodoPage = () => {
                 </div>
 
                 {/* Completed Tasks */}
-                <div className="bg-gray-900 rounded-xl p-4 border border-gray-800">
+                <div className="bg-gray-800 rounded-xl p-4 border border-gray-800">
                   <div className="flex items-center mb-3">
                     <CheckCircle size={18} className="text-green-500 mr-2" />
                     <span className="font-medium">Completed Tasks</span>
@@ -256,7 +271,7 @@ const TodoPage = () => {
                 </div>
 
                 {/* Overdue Tasks */}
-                <div className="bg-gray-900 rounded-xl p-4 border border-gray-800">
+                <div className="bg-gray-800 rounded-xl p-4 border border-gray-800">
                   <div className="flex items-center mb-3">
                     <AlertTriangle size={18} className="text-red-500 mr-2" />
                     <span className="font-medium">Overdue Tasks</span>
@@ -269,7 +284,7 @@ const TodoPage = () => {
                 </div>
 
                 {/* Archived Tasks */}
-                <div className="bg-gray-900 rounded-xl p-4 border border-gray-800">
+                <div className="bg-gray-800 rounded-xl p-4 border border-gray-800">
                   <div className="flex items-center mb-3">
                     <Archive size={18} className="text-gray-400 mr-2" />
                     <span className="font-medium">Archived Tasks</span>
