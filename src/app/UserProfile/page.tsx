@@ -224,15 +224,7 @@ const TodoPage = () => {
               <Bookmark size={18} className="inline mr-1" />
               Stats
             </button>
-            <button
-              onClick={() => setActiveTab("archived")}
-              className={`flex-1 py-3 text-center font-medium text-sm ${
-                activeTab === "archived" ? "text-blue-500 border-b-2 border-blue-500" : "text-gray-400"
-              }`}
-            >
-              <Archive size={18} className="inline mr-1" />
-              Archived
-            </button>
+          
           </div>
         </div>
 
