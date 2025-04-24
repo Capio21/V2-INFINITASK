@@ -116,7 +116,7 @@ export default function Sidebar() {
 
 
    {/* Cyber Sidebar */}
-<aside className={`fixed top-0 left-0 h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 p-3 flex flex-col justify-between border-r border-blue-500 shadow-2xl transition-transform duration-300 z-[1000] font-mono ${isOpen ? "translate-x-0 w-64" : "-translate-x-full w-64"}`}>
+<aside className={`fixed top-0 left-0 h-screen bg-gradient-to-b from-gray-900 via-gray-900 to-gray-900 p-3 flex flex-col justify-between border-r border-blue-500 shadow-2xl transition-transform duration-300 z-[1000] font-mono ${isOpen ? "translate-x-0 w-64" : "-translate-x-full w-64"}`}>
   {/* Top Close Button */}
   <div className="flex items-center justify-between mb-4">
     <button onClick={() => setIsOpen(!isOpen)} className="text-cyan-400 text-2xl focus:outline-none md:hidden hover:text-blue-400 transition">
