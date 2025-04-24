@@ -131,7 +131,7 @@ const TodoPage = () => {
           <br />
           <br />
             <h1 className="text-4xl h-auto font-extrabold bg-gradient-to-r from-blue-500 to-cyan-300 bg-clip-text text-transparent drop-shadow-md">
-              Admin Task Dashboard
+             Employee Profile
             </h1>
             <p className="text-sm text-gray-400 mt-2">Manage your daily tasks and track progress</p>
           </div>
