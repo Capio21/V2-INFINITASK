@@ -3,9 +3,27 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "../Components/Sidebar";
-import { Clock, CheckCircle, AlertTriangle, Archive, MessageCircle } from "lucide-react";
+import {
+  Clock,
+  CheckCircle,
+  AlertTriangle,
+  Archive,
+  MessageCircle,
+} from "lucide-react";
 import { ToastContainer } from "react-toastify";
-import { PieChart, Pie, Cell, Tooltip, LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 interface Activity {
   id: number;
@@ -16,23 +34,30 @@ interface Activity {
 
 const TodoList = () => {
   const [activities, setActivities] = useState<Activity[]>([]);
-  const [currentTime, setCurrentTime] = useState<string>(new Date().toLocaleTimeString());
-  const [currentDate, setCurrentDate] = useState<string>(new Date().toLocaleDateString());
+  const [currentTime, setCurrentTime] = useState<string>("");
+  const [currentDate, setCurrentDate] = useState<string>("");
 
   const API_BASE_URL = "https://infinitech-api5.site/api";
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    setCurrentTime(new Date().toLocaleTimeString());
+    setCurrentDate(new Date().toLocaleDateString());
+
     fetchActivities();
+
     const clockInterval = setInterval(() => {
       setCurrentTime(new Date().toLocaleTimeString());
       setCurrentDate(new Date().toLocaleDateString());
     }, 1000);
+
     return () => clearInterval(clockInterval);
   }, []);
 
   const fetchActivities = async () => {
     try {
-      const authToken = sessionStorage.getItem("authToken");
+      const authToken = typeof window !== "undefined" ? sessionStorage.getItem("authToken") : null;
       if (!authToken) {
         console.error("No authToken found in sessionStorage.");
         return;
@@ -70,10 +95,11 @@ const TodoList = () => {
     Overdue: activity.status === "overdue" ? 1 : 0,
   }));
 
- const handleChatClick = () => {
-  window.location.href = "https://tawk.to/chat/67e3a3defdf8c219086c03df/1in8jg7nt";
-};
-
+  const handleChatClick = () => {
+    if (typeof window !== "undefined") {
+      window.location.href = "https://tawk.to/chat/67e3a3defdf8c219086c03df/1in8jg7nt";
+    }
+  };
 
   return (
     <div className="flex bg-gray-900 text-white min-h-screen">
@@ -85,20 +111,18 @@ const TodoList = () => {
         <br />
         <br />
         <div className="flex flex-col items-center mb-6">
-  <header className="text-center mb-6">
-    <h1 className="text-4xl font-extrabold bg-gradient-to-r from-blue-500 to-cyan-300 bg-clip-text text-transparent drop-shadow-md">
-      Admin Task Dashboard
-    </h1>
-    <p className="text-sm text-gray-400 mt-2">
-      Manage your daily tasks and track progress
-    </p>
-  </header>
-  
-  <div className="text-sm text-gray-300">
-    📅 {currentDate} | ⏰ {currentTime}
-  </div>
-</div>
-
+          <header className="text-center mb-6">
+            <h1 className="text-4xl font-extrabold bg-gradient-to-r from-blue-500 to-cyan-300 bg-clip-text text-transparent drop-shadow-md">
+              Admin Task Dashboard
+            </h1>
+            <p className="text-sm text-gray-400 mt-2">
+              Manage your daily tasks and track progress
+            </p>
+          </header>
+          <div className="text-sm text-gray-300">
+            📅 {currentDate} | ⏰ {currentTime}
+          </div>
+        </div>
 
         {/* Top Bar */}
         <div className="flex justify-between items-center bg-gray-700 rounded-xl px-6 py-4 mb-6 shadow-md">
@@ -126,7 +150,7 @@ const TodoList = () => {
           </div>
         </div>
 
-        {/* Task Status Cards */}
+        {/* Task Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mb-6">
           <Card icon={<Clock size={22} className="text-yellow-400" />} label="Pending Tasks" count={pendingCount} color="yellow" />
           <Card icon={<CheckCircle size={22} className="text-green-400" />} label="Completed Tasks" count={completeCount} color="green" />
@@ -180,8 +204,18 @@ const TodoList = () => {
   );
 };
 
-// Card Component
-const Card = ({ icon, label, count, color }: { icon: React.ReactNode; label: string; count: number; color: string }) => {
+// Card component
+const Card = ({
+  icon,
+  label,
+  count,
+  color,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  count: number;
+  color: string;
+}) => {
   const bgMap: Record<string, string> = {
     yellow: "bg-yellow-600",
     green: "bg-green-600",
