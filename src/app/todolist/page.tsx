@@ -75,7 +75,7 @@ const TodoList = () => {
   };
 
   return (
-    <div className="flex bg-gray-800 text-white min-h-screen">
+    <div className="flex bg-gray-900 text-white min-h-screen">
       <Sidebar />
       <div className="flex-grow p-6 md:ml-64">
         <ToastContainer />
