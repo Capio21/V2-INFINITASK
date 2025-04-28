@@ -454,66 +454,73 @@ const ActivityPage = () => {
           
 
 {/* Button Section */}
-<div className="w-full md:w-auto flex flex-col md:flex-row items-center justify-center gap-2">
+<div className="w-full flex flex-col items-center justify-center gap-4">
   
-  {/* STATUS Button with Dropdown */}
-  <div className="relative w-full md:w-auto">
+  {/* Tab Buttons: CREATE/CANCEL & Status Tabs */}
+  <div className="w-full flex justify-center gap-2">
+    {/* CREATE/CANCEL Button as a Tab */}
     <button
-      onClick={() => setOpen(!open)}
-      className="w-full md:w-auto px-4 py-1.5 text-sm font-semibold text-white bg-blue-600 border border-blue-300 rounded-lg shadow-md transition hover:bg-blue-500 hover:border-blue-200 active:bg-blue-400"
+      onClick={() => setIsOpen((prev) => !prev)}
+      className={`px-4 py-2 rounded-md text-sm font-semibold transition-all duration-200 
+        ${isOpen ? "bg-blue-600 text-white" : "bg-blue-200 text-blue-800 hover:bg-blue-300"} 
+        border border-b-0 rounded-t-md`}
     >
-      STATUS
+      {/* Icon Only on Mobile (Hidden on Larger Screens) */}
+      <span className="text-lg block md:hidden">
+        {isOpen ? "❌" : "➕"}
+      </span>
+      
+      {/* Text and Icon for Larger Screens */}
+      <span className="hidden md:block">
+        {isOpen ? "CANCEL" : "CREATE"}
+      </span>
     </button>
 
-    {/* Dropdown */}
-    {open && (
-      <div
-        className={`absolute z-50 bg-blue-100 p-3 rounded-lg shadow-lg border border-blue-300 transition-all duration-300
-          ${isMobile ? "w-full left-1/2 transform -translate-x-1/2 mt-2 top-full" : "w-[400px] left-full ml-3 top-0"}`}
+    {/* Centered Status Tabs (With Mobile Icon Layout) */}
+    {statuses.map((status) => (
+      <button
+        key={status}
+        className={`px-4 py-2 rounded-md text-sm font-semibold transition-all duration-200
+          ${selectedStatus === status.toLowerCase()
+            ? "bg-blue-600 text-white shadow-md"
+            : "bg-blue-200 text-blue-800 hover:bg-blue-300"
+          }
+          border border-b-0 rounded-t-md`}
+        onClick={() => setSelectedStatus(status.toLowerCase())}
       >
-        <div className={`grid ${isMobile ? "grid-cols-1" : "grid-cols-4"} gap-2`}>
-          {statuses.map((status) => (
-            <button
-              key={status}
-              className={`flex items-center justify-center w-full px-3 py-1.5 rounded-md transition
-                ${selectedStatus === status.toLowerCase()
-                  ? "bg-blue-400 text-white"
-                  : "bg-blue-200 text-blue-800 hover:bg-blue-300"
-                }
-              `}
-              onClick={() => {
-                setSelectedStatus(status.toLowerCase());
-                setOpen(false);
-              }}
-            >
-              <span className="text-lg">
-                {status === "Pending"
-                  ? "⏳"
-                  : status === "Complete"
-                  ? "✅"
-                  : status === "Overdue"
-                  ? "❌"
-                  : status === "Archived"
-                  ? "📦"
-                  : "❓"}
-              </span>
-              {!isMobile && <span className="ml-2 text-xs font-medium">{status}</span>}
-            </button>
-          ))}
-        </div>
-      </div>
-    )}
+        {/* Icon Only on Mobile (Hidden on Larger Screens) */}
+        <span className="text-lg block md:hidden">
+          {status === "Pending"
+            ? "⏳"
+            : status === "Complete"
+            ? "✅"
+            : status === "Overdue"
+            ? "❌"
+            : status === "Archived"
+            ? "📦"
+            : "❓"}
+        </span>
+        
+        {/* Text and Icon for Larger Screens */}
+        <span className="hidden md:block">
+          <span className="text-lg">
+            {status === "Pending"
+              ? "⏳"
+              : status === "Complete"
+              ? "✅"
+              : status === "Overdue"
+              ? "❌"
+              : status === "Archived"
+              ? "📦"
+              : "❓"}
+          </span>{" "}
+          {status}
+        </span>
+      </button>
+    ))}
   </div>
-
-  {/* CREATE/CANCEL Button */}
-  <button
-    onClick={() => setIsOpen((prev) => !prev)}
-    className="w-full md:w-auto px-4 py-1.5 text-sm font-semibold text-white bg-blue-600 border border-blue-300 rounded-lg shadow-md transition hover:bg-blue-500 hover:border-blue-200 active:bg-blue-400"
-  >
-    {isOpen ? "CANCEL" : "CREATE"}
-  </button>
 </div>
-
+          
   {/* Progress Bar Section */}
   <div className="w-full md:w-auto mt-4 md:mt-0">
 
