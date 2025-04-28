@@ -255,45 +255,41 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* About Section */}
-        <section id="about" className="about">
-          <div className="container">
-            <div className="section-header">
-              <h2>About Infini Task</h2>
-              <p>The ultimate solution for managing your tasks and projects</p>
-            </div>
-            <div className="about-content">
-              <div className="about-text">
-                <p>
-                  Infini Task was created with a simple mission: to help individuals and teams manage their tasks more
-                  effectively. Our platform combines powerful features with an intuitive interface to make task
-                  management effortless.
-                </p>
-                <p>
-                  Whether you're a freelancer juggling multiple clients, a team leader coordinating projects, or just
-                  someone looking to stay organized, Infini Task provides the tools you need to succeed.
-                </p>
-                <div className="about-stats">
-                  <div className="stat">
-                    <h3>10,000+</h3>
-                    <p>Active Users</p>
-                  </div>
-                  <div className="stat">
-                    <h3>1M+</h3>
-                    <p>Tasks Completed</p>
-                  </div>
-                  <div className="stat">
-                    <h3>99%</h3>
-                    <p>Customer Satisfaction</p>
-                  </div>
-                </div>
-              </div>
-              <div className="about-image">
-                <Image src="/infini.png" alt="About Infini Task" width={500} height={400} />
-              </div>
-            </div>
-          </div>
-        </section>
+{/* About Section */}
+<section id="about" className="about py-10 px-5 md:px-20 bg-gray-50">
+  <div className="container mx-auto">
+    <div className="section-header text-center mb-8">
+      <h2 className="text-3xl font-bold mb-2">About Infini Task</h2>
+      <p className="text-gray-600">Empowering office teams to stay organized, efficient, and ahead of deadlines</p>
+    </div>
+    <div className="flex flex-col md:flex-row items-center gap-10">
+      <div className="about-text flex-1">
+        <p className="text-gray-700 mb-4">
+          Infini Task is your all-in-one platform designed specifically for office employees and teams who want to organize their daily tasks efficiently. From setting priorities to tracking project progress, Infini Task makes it easy to collaborate and stay productive.
+        </p>
+        <p className="text-gray-700 mb-4">
+          Whether you're managing internal projects, handling client work, or simply keeping your team's workflow smooth, Infini Task offers powerful tools with a user-friendly experience. Plan, assign, and complete tasks — all in one place.
+        </p>
+        <ul className="list-disc pl-5 text-gray-700 space-y-2">
+          <li>Organize office tasks and projects effortlessly</li>
+          <li>Assign responsibilities and track deadlines</li>
+          <li>Boost team collaboration and accountability</li>
+          <li>Stay on top of priorities even on busy days</li>
+        </ul>
+      </div>
+      <div className="about-image flex-1">
+        <Image
+          src="/infini.png"
+          alt="Infini Task for Office Teams"
+          width={500}
+          height={400}
+          className="rounded-lg shadow-md w-full object-cover"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
 
         {/* Contact Section */}
         <section className="mt-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-20">
