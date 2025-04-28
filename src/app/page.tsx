@@ -148,6 +148,7 @@ export default function LandingPage() {
         </section>
         {/* How It Works */}
         <section id="how-it-works" className="how-it-works">
+                    <br />
           <div className="container">
             <div className="section-header">
               <h2>How Infini Task Works</h2>
@@ -163,6 +164,7 @@ export default function LandingPage() {
               ))}
             </div>
           </div>
+                    <br />
         </section>
 
         {/* Features Section - Carousel */}
