@@ -380,7 +380,7 @@ export default function LandingPage() {
 const steps = [
   {
     title: "Sign Up",
-    description: "Create your account in seconds and get started with a free trial.",
+    description: "Create your account in seconds and get started.",
   },
   {
     title: "Create Tasks",
