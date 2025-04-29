@@ -530,7 +530,7 @@ const ActivityPage = () => {
 <div className="flex justify-center w-full px-4 sm:px-6  min-h-auto">
   <div className="w-full max-w-auto p-4 sm:p-6 rounded-lg">
     <div className="max-h-[90vh] overflow-y-auto">
-      {currentActivities.length > 0 && (
+      {currentActivities.length > 0 ? (
         <div className="relative p-6 sm:p-8 bg-[#1a1a2e] text-cyan-200 rounded-xl shadow-xl flex flex-col w-full border border-cyan-400/20 backdrop-blur-md">
           {/* Status Badge */}
           <span
@@ -586,7 +586,7 @@ const ActivityPage = () => {
           {/* Task Description List */}
           <div className="mt-4">
             <div className="w-full bg-[#1e1e30] shadow-md rounded-lg border border-cyan-400/20">
-              <div className="bg-gradient-to-r from-cyan-500 to-fuchsia-600 text-white text-center py-4 text-lg font-semibold rounded-t-lg">
+              <div className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-center py-4 text-lg font-semibold rounded-t-lg">
                 📋 Task Description List
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
@@ -690,11 +690,20 @@ const ActivityPage = () => {
             message="Are you sure you want to archive this activity? You can restore it later."
           />
         </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center h-64 text-cyan-300">
+          <span className="text-2xl font-bold mb-4">
+            {status === "pending" && "No pending activities."}
+            {status === "complete" && "No completed activities."}
+            {status === "overdue" && "No overdue activities."}
+            {!["pending", "complete", "overdue"].includes(status) && "No activities found."}
+          </span>
+          <p className="text-cyan-400">Try adding a new activity!</p>
+        </div>
       )}
     </div>
   </div>
 </div>
-
 
           {/* Pagination Controls */}
         </div>
